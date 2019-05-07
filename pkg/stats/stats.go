@@ -21,9 +21,9 @@ import (
 	"net"
 
 	"github.com/golang/glog"
+	"github.com/kubernetes-sigs/poseidon/pkg/firmament"
+	"github.com/kubernetes-sigs/poseidon/pkg/k8sclient"
 	"google.golang.org/grpc"
-	"k8s.io/poseidon/pkg/firmament"
-	"k8s.io/poseidon/pkg/k8sclient"
 )
 
 type poseidonStatsServer struct {
@@ -86,9 +86,9 @@ func (s *poseidonStatsServer) ReceiveNodeStats(stream PoseidonStats_ReceiveNodeS
 			return err
 		}
 		resourceStats := convertNodeStatsToResourceStats(nodeStats)
-		k8sclient.NodesCond.L.Lock()
+		k8sclient.NodeMux.RLock()
 		rtnd, ok := k8sclient.NodeToRTND[nodeStats.GetHostname()]
-		k8sclient.NodesCond.L.Unlock()
+		k8sclient.NodeMux.RUnlock()
 		if !ok {
 			sendErr := stream.Send(&NodeStatsResponse{
 				Type:     NodeStatsResponseType_NODE_NOT_FOUND,
@@ -129,9 +129,9 @@ func (s *poseidonStatsServer) ReceivePodStats(stream PoseidonStats_ReceivePodSta
 			Name:      podStats.Name,
 			Namespace: podStats.Namespace,
 		}
-		k8sclient.PodsCond.L.Lock()
+		k8sclient.PodMux.RLock()
 		td, ok := k8sclient.PodToTD[podIdentifier]
-		k8sclient.PodsCond.L.Unlock()
+		k8sclient.PodMux.RUnlock()
 		if !ok {
 			sendErr := stream.Send(&PodStatsResponse{
 				Type:      PodStatsResponseType_POD_NOT_FOUND,
@@ -158,6 +158,8 @@ func (s *poseidonStatsServer) ReceivePodStats(stream PoseidonStats_ReceivePodSta
 	}
 }
 
+// StartgRPCStatsServer starts a gRPC server to serve poseidon status.
+// Currently, it receives node and pod status.
 func StartgRPCStatsServer(statsServerAddress, firmamentAddress string) {
 	glog.Info("Starting stats server...")
 	listen, err := net.Listen("tcp", statsServerAddress)
@@ -167,7 +169,7 @@ func StartgRPCStatsServer(statsServerAddress, firmamentAddress string) {
 	grpcServer := grpc.NewServer()
 	fc, conn, err := firmament.New(firmamentAddress)
 	if err != nil {
-		glog.Fatalln("Unable to initialze Firmament client", err)
+		glog.Fatalln("Unable to initialize Firmament client", err)
 
 	}
 	defer conn.Close()

@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 
 # Copyright 2016 The Kubernetes Authors.
 #
@@ -32,9 +32,6 @@ BACKUP=_tmp/godep-save.$RANDOM
 mkdir -p "${BACKUP}"
 
 function kube::godep_save::cleanup() {
-    echo "not cleaning up"
-    return 
-    echo "not cleanign again"
     if [[ -d "${BACKUP}/vendor" ]]; then
         kube::log::error "${BACKUP}/vendor exists, restoring it"
         rm -rf vendor
@@ -69,23 +66,25 @@ kube::log::status "Running godep save - this might take a while"
 # This uses $(pwd) rather than ${KUBE_ROOT} because KUBE_ROOT will be
 # realpath'ed, and godep barfs ("... is not using a known version control
 # system") on our staging dirs.
-#GOPATH="${GOPATH}" godep save "${REQUIRED_BINS[@]}"
-godep save "${REQUIRED_BINS[@]}"
-godep save "${REQUIRED_BINS[@]}"
+GOPATH="${GOPATH}:$(pwd)/staging" godep save "${REQUIRED_BINS[@]}"
 
+# create a symlink in vendor directory pointing to the staging client. This
+# let other packages use the staging client as if it were vendored.
+for repo in $(ls staging/src/k8s.io); do
+  if [ ! -e "vendor/k8s.io/${repo}" ]; then
+    ln -s "../../staging/src/k8s.io/${repo}" "vendor/k8s.io/${repo}"
+  fi
+done
 
 # Workaround broken symlink in docker repo because godep copies the link, but
 # not the target
 rm -rf vendor/github.com/docker/docker/project/
 
-#TODO: Re-enable after configuring bazel build
-#kube::log::status "Updating BUILD files"
-#hack/update-bazel.sh >/dev/null
+kube::log::status "Updating BUILD files"
+hack/update-bazel.sh >/dev/null
 
-
-#TODO: Re-enable after configuring LICENSES
-#kube::log::status "Updating LICENSES file"
-#hack/update-godep-licenses.sh >/dev/null
+kube::log::status "Updating LICENSES file"
+hack/update-godep-licenses.sh >/dev/null
 
 # Clean up
 rm -rf "${BACKUP}"

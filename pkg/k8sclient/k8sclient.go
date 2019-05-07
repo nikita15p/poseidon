@@ -17,37 +17,50 @@ limitations under the License.
 package k8sclient
 
 import (
+	"github.com/kubernetes-sigs/poseidon/pkg/firmament"
 	"k8s.io/api/core/v1"
 	meta_v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
-	"k8s.io/poseidon/pkg/firmament"
 
 	"github.com/golang/glog"
+	config2 "github.com/kubernetes-sigs/poseidon/pkg/config"
+	"k8s.io/apimachinery/pkg/util/wait"
+	"sync"
+	"time"
 )
 
-var clientSet kubernetes.Interface
+var ClientSet kubernetes.Interface
 
-func BindPodToNode(podName string, namespace string, nodeName string) {
-	err := clientSet.CoreV1().Pods(namespace).Bind(&v1.Binding{
-		TypeMeta: meta_v1.TypeMeta{},
-		ObjectMeta: meta_v1.ObjectMeta{
-			Name: podName,
-		},
-		Target: v1.ObjectReference{
-			Namespace: namespace,
-			Name:      nodeName,
-		}})
-	if err != nil {
-		glog.Fatalf("Could not bind %v", err)
+// BindPodToNode call Kubernetes API to place a pod on a node.
+func BindPodToNode() {
+	for {
+		bindInfo := <-BindChannel
+		err := ClientSet.CoreV1().Pods(bindInfo.Namespace).Bind(&v1.Binding{
+			TypeMeta: meta_v1.TypeMeta{},
+			ObjectMeta: meta_v1.ObjectMeta{
+				Name: bindInfo.Name,
+			},
+			Target: v1.ObjectReference{
+				Namespace: bindInfo.Namespace,
+				Name:      bindInfo.Nodename,
+			}})
+		if err != nil {
+			glog.Errorf("Could not bind pod:%s to nodeName:%s, error: %v", bindInfo.Name, bindInfo.Nodename, err)
+		}
 	}
 }
 
+// DeletePod calls Kubernetes API to delete a Pod by its namespace and name.
 func DeletePod(podName string, namespace string) {
-	clientSet.CoreV1().Pods(namespace).Delete(podName, &meta_v1.DeleteOptions{})
+	err := ClientSet.CoreV1().Pods(namespace).Delete(podName, &meta_v1.DeleteOptions{})
+	if err != nil {
+		glog.Fatalf("Could not delete pod:%s in namespace:%s, error: %v", podName, namespace, err)
+	}
 }
 
+// GetClientConfig returns a kubeconfig object which to be passed to a Kubernetes client on initialization.
 func GetClientConfig(kubeconfig string) (*rest.Config, error) {
 	if kubeconfig != "" {
 		return clientcmd.BuildConfigFromFlags("", kubeconfig)
@@ -55,12 +68,19 @@ func GetClientConfig(kubeconfig string) (*rest.Config, error) {
 	return rest.InClusterConfig()
 }
 
+// New initializes a firmament and Kubernetes client and starts watching Pod and Node.
 func New(schedulerName string, kubeConfig string, kubeVersionMajor, kubeVersionMinor int, firmamentAddress string) {
+
 	config, err := GetClientConfig(kubeConfig)
 	if err != nil {
 		glog.Fatalf("Failed to load client config: %v", err)
 	}
-	clientSet, err = kubernetes.NewForConfig(config)
+	//
+
+	config.QPS = config2.GetQPS()
+	config.Burst = config2.GetBurst()
+
+	ClientSet, err = kubernetes.NewForConfig(config)
 	if err != nil {
 		glog.Fatalf("Failed to create connection: %v", err)
 	}
@@ -71,9 +91,31 @@ func New(schedulerName string, kubeConfig string, kubeVersionMajor, kubeVersionM
 	defer conn.Close()
 	glog.Info("k8s newclient called")
 	stopCh := make(chan struct{})
-	go NewPodWatcher(kubeVersionMajor, kubeVersionMinor, schedulerName, clientSet, fc).Run(stopCh, 10)
-	go NewNodeWatcher(clientSet, fc).Run(stopCh, 10)
+	go NewPodWatcher(kubeVersionMajor, kubeVersionMinor, schedulerName, ClientSet, fc).Run(stopCh, 10)
+	go NewNodeWatcher(ClientSet, fc).Run(stopCh, 10)
+	go NewK8sPodWatcher(kubeVersionMajor, kubeVersionMinor, schedulerName, ClientSet, fc).controller.Run(stopCh)
 
 	// We block here.
 	<-stopCh
+}
+
+func init() {
+
+	glog.Info("k8sclient init called")
+	BindChannel = make(chan BindInfo, 1000)
+	PodToK8sPodLock = new(sync.Mutex)
+	ProcessedPodEventsLock = new(sync.Mutex)
+	PodToK8sPod = make(map[PodIdentifier]*v1.Pod)
+	ProcessedPodEvents = make(map[PodIdentifier]*v1.Pod)
+}
+
+// Run starts a pod watcher.
+func BindPodWorkers(stopCh <-chan struct{}, nWorkers int) {
+
+	for i := 0; i < nWorkers; i++ {
+		go wait.Until(BindPodToNode, time.Second, stopCh)
+	}
+
+	<-stopCh
+	glog.Info("Stopping RunBindPods")
 }

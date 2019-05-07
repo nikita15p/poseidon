@@ -20,6 +20,7 @@ set -o pipefail
 
 KUBE_ROOT=$(dirname "${BASH_SOURCE}")/..
 source "${KUBE_ROOT}/hack/lib/init.sh"
+source "${KUBE_ROOT}/hack/lib/util.sh"
 
 kube::log::status "Restoring kubernetes godeps"
 
@@ -31,5 +32,5 @@ fi
 kube::util::ensure_godep_version
 
 kube::log::status "Downloading dependencies - this might take a while"
-GOPATH="${GOPATH}" godep restore "$@"
+GOPATH="${GOPATH}:${KUBE_ROOT}/staging" godep restore "$@"
 kube::log::status "Done"

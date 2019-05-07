@@ -21,7 +21,7 @@ import (
 	"testing"
 	"time"
 
-	"k8s.io/poseidon/pkg/firmament"
+	"github.com/kubernetes-sigs/poseidon/pkg/firmament"
 
 	"github.com/golang/mock/gomock"
 	"k8s.io/api/core/v1"
@@ -52,7 +52,7 @@ func BuildFirmamentResourceDescriptor(
 	uuid, friendlyName string,
 	cpuCores float32,
 	ramCap uint64,
-	coreOneUuid, coreOnefriendlyName string) *firmament.ResourceTopologyNodeDescriptor {
+	coreOneUUID, coreOnefriendlyName string) *firmament.ResourceTopologyNodeDescriptor {
 
 	return &firmament.ResourceTopologyNodeDescriptor{
 		ResourceDesc: &firmament.ResourceDescriptor{
@@ -64,11 +64,16 @@ func BuildFirmamentResourceDescriptor(
 				CpuCores: cpuCores,
 				RamCap:   ramCap,
 			},
+			AvailableResources: &firmament.ResourceVector{},
+			ReservedResources: &firmament.ResourceVector{
+				CpuCores: cpuCores,
+				RamCap:   ramCap,
+			},
 		},
 		Children: []*firmament.ResourceTopologyNodeDescriptor{
 			{
 				ResourceDesc: &firmament.ResourceDescriptor{
-					Uuid:         coreOneUuid,
+					Uuid:         coreOneUUID,
 					FriendlyName: coreOnefriendlyName,
 					State:        firmament.ResourceDescriptor_RESOURCE_IDLE,
 					ResourceCapacity: &firmament.ResourceVector{
@@ -181,7 +186,7 @@ func TestNodeWatcher_parseNode(t *testing.T) {
 		expected *Node
 	}{
 		{
-			node: BuildNode("node0", "10", "10000000000", nil, []v1.NodeCondition{
+			node: BuildNode("node0", "10", "10000000", nil, []v1.NodeCondition{
 				{
 					Type:   v1.NodeOutOfDisk,
 					Status: v1.ConditionFalse,
@@ -193,9 +198,9 @@ func TestNodeWatcher_parseNode(t *testing.T) {
 				Phase:            NodeAdded,
 				IsReady:          false,
 				IsOutOfDisk:      false,
-				CpuCapacity:      10000,
-				CpuAllocatable:   0,
-				MemCapacityKb:    9765625,
+				CPUCapacity:      10000,
+				CPUAllocatable:   0,
+				MemCapacityKb:    10000000000,
 				MemAllocatableKb: 0,
 				Labels:           nil,
 				Annotations:      nil,
@@ -222,7 +227,7 @@ func TestNodeWatcher_enqueueNodeAddition(t *testing.T) {
 		expected *Node
 	}{
 		{
-			node: BuildNode("node0", "10", "10000000000", nil, []v1.NodeCondition{
+			node: BuildNode("node0", "10", "10000000", nil, []v1.NodeCondition{
 				{
 					Type:   v1.NodeOutOfDisk,
 					Status: v1.ConditionFalse,
@@ -234,16 +239,16 @@ func TestNodeWatcher_enqueueNodeAddition(t *testing.T) {
 				Phase:            NodeAdded,
 				IsReady:          false,
 				IsOutOfDisk:      false,
-				CpuCapacity:      10000,
-				CpuAllocatable:   0,
-				MemCapacityKb:    9765625,
+				CPUCapacity:      10000,
+				CPUAllocatable:   0,
+				MemCapacityKb:    10000000000,
 				MemAllocatableKb: 0,
 				Labels:           nil,
 				Annotations:      nil,
 			},
 		},
 		{
-			node: BuildNode("node1", "10", "10000000000", nil, []v1.NodeCondition{
+			node: BuildNode("node1", "10", "10000000", nil, []v1.NodeCondition{
 				{
 					Type:   v1.NodeOutOfDisk,
 					Status: v1.ConditionFalse,
@@ -255,9 +260,9 @@ func TestNodeWatcher_enqueueNodeAddition(t *testing.T) {
 				Phase:            NodeAdded,
 				IsReady:          false,
 				IsOutOfDisk:      false,
-				CpuCapacity:      10000,
-				CpuAllocatable:   0,
-				MemCapacityKb:    9765625,
+				CPUCapacity:      10000,
+				CPUAllocatable:   0,
+				MemCapacityKb:    10000000000,
 				MemAllocatableKb: 0,
 				Labels:           nil,
 				Annotations:      nil,
@@ -268,7 +273,7 @@ func TestNodeWatcher_enqueueNodeAddition(t *testing.T) {
 	defer testObj.mockCtrl.Finish()
 
 	nodeWatch := NewNodeWatcher(testObj.kubeClient, testObj.firmamentClient)
-	keychan := make(chan interface{})
+	keychain := make(chan interface{})
 	itemschan := make(chan []interface{})
 
 	for _, testValue := range testData {
@@ -279,13 +284,13 @@ func TestNodeWatcher_enqueueNodeAddition(t *testing.T) {
 		nodeWatch.enqueueNodeAddition(key, testValue.node)
 		go func() {
 			newkey, newitems, _ := nodeWatch.nodeWorkQueue.Get()
-			keychan <- newkey
+			keychain <- newkey
 			itemschan <- newitems
 		}()
 		waitTimer := time.NewTimer(time.Second * 5)
 		select {
 		case <-waitTimer.C:
-		case newkey := <-keychan:
+		case newkey := <-keychain:
 			newitem := <-itemschan
 
 			for _, item := range newitem {
@@ -312,8 +317,8 @@ func TestNodeWatcher_createResourceTopologyForNode(t *testing.T) {
 				Phase:            NodeAdded,
 				IsReady:          false,
 				IsOutOfDisk:      false,
-				CpuCapacity:      1000,
-				CpuAllocatable:   0,
+				CPUCapacity:      1000,
+				CPUAllocatable:   0,
 				MemCapacityKb:    9765625,
 				MemAllocatableKb: 0,
 				Labels:           nil,
@@ -332,8 +337,8 @@ func TestNodeWatcher_createResourceTopologyForNode(t *testing.T) {
 				Phase:            NodeAdded,
 				IsReady:          true,
 				IsOutOfDisk:      false,
-				CpuCapacity:      1000,
-				CpuAllocatable:   0,
+				CPUCapacity:      1000,
+				CPUAllocatable:   0,
 				MemCapacityKb:    2048,
 				MemAllocatableKb: 0,
 				Labels:           nil,
