@@ -3,6 +3,7 @@ package(default_visibility = ["//visibility:public"])
 load(
     "@io_bazel_rules_go//go:def.bzl",
     "go_library",
+    "go_test",
 )
 
 go_library(
@@ -11,8 +12,13 @@ go_library(
         "capabilities.go",
         "doc.go",
     ],
-    importmap = "github.com/kubernetes-sigs/poseidon/vendor/k8s.io/kubernetes/pkg/capabilities",
     importpath = "k8s.io/kubernetes/pkg/capabilities",
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["capabilities_test.go"],
+    embed = [":go_default_library"],
 )
 
 filegroup(

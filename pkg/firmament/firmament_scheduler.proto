@@ -11,6 +11,8 @@ import "resource_topology_node_desc.proto";
 import "task_desc.proto";
 import "task_stats.proto";
 import "scheduling_delta.proto";
+import "queue_desc.proto";
+import "pod_group_desc.proto";
 
 service FirmamentScheduler {
   // Schedule sends a schedule request to firmament server.
@@ -45,6 +47,20 @@ service FirmamentScheduler {
 
   // AddTaskInfo sends task status to firmament server.
   rpc AddTaskInfo (TaskInfo) returns (TaskInfoResponse);
+
+  // QueueAdded notifies firmament server the given queue is added
+  rpc QueueAdded(QueueDescriptor) returns(QueueAddedResponse) {}
+  // QueueRemoved notifies firmament server the given queue is removed
+  rpc QueueRemoved(QueueDescriptor) returns(QueueRemoveResponse) {}
+  // QueueUpdated notifies firmament server the given queue is updated
+  rpc QueueUpdated(QueueDescriptor) returns(QueueUpdateResponse) {}
+
+  // Pod Group notifies firmament server the given pod group is added
+  rpc PodGroupAdded(PodGroupDescriptor) returns(PodGroupAddedResponse) {}
+  // Pod Group notifies firmament server the given pod group is removed
+  rpc PodGroupRemoved(PodGroupDescriptor) returns(PodGroupRemoveResponse) {}
+  // Pod Group notifies firmament server the given pod group is updated
+  rpc PodGroupUpdated(PodGroupDescriptor) returns(PodGroupUpdateResponse) {}
 }
 
 message ScheduleRequest {}
@@ -170,4 +186,48 @@ enum TaskInfoReplyType {
 enum TaskInfoType{
   TASKINFO_ADD =0;
   TASKINFO_REMOVE=1;
+}
+
+message QueueAddedResponse{
+  QueueReplyType type = 1;
+}
+
+message QueueUpdateResponse{
+  QueueReplyType type = 1;
+}
+
+message QueueRemoveResponse{
+  QueueReplyType type = 1;
+}
+
+enum QueueReplyType {
+  QUEUE_ADDED_OK = 0;
+  QUEUE_UPDATED_OK = 1;
+  QUEUE_REMOVED_OK = 2;
+  QUEUE_FAILED_OK = 3;
+  QUEUE_ALREADY_ADDED = 4;
+  QUEUE_NOT_FOUND = 5;
+  QUEUE_INVALID_OK = 6;
+}
+
+message PodGroupAddedResponse{
+  PodGroupReplyType type = 1;
+}
+
+message PodGroupUpdateResponse{
+  PodGroupReplyType type = 1;
+}
+
+message PodGroupRemoveResponse{
+  PodGroupReplyType type = 1;
+}
+
+enum PodGroupReplyType {
+  PODGROUP_ADDED_OK = 0;
+  PODGROUP_UPDATED_OK = 1;
+  PODGROUP_REMOVED_OK = 2;
+  PODGROUP_FAILED_OK = 3;
+  PODGROUP_ALREADY_ADDED = 4;
+  PODGROUP_NOT_FOUND = 5;
+  PODGROUP_INVALID_OK = 6;
 }

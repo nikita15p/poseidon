@@ -17,11 +17,12 @@ limitations under the License.
 package main
 
 import (
+	"github.com/kubernetes-sigs/poseidon/pkg/batchclient"
 	"time"
 
 	"github.com/kubernetes-sigs/poseidon/pkg/config"
 	"github.com/kubernetes-sigs/poseidon/pkg/firmament"
-	k8sclient "github.com/kubernetes-sigs/poseidon/pkg/k8sclient"
+	"github.com/kubernetes-sigs/poseidon/pkg/k8sclient"
 	"github.com/kubernetes-sigs/poseidon/pkg/metrics"
 	"github.com/kubernetes-sigs/poseidon/pkg/poseidonhttp"
 	"github.com/kubernetes-sigs/poseidon/pkg/stats"
@@ -127,4 +128,6 @@ func main() {
 	go poseidonhttp.Serve(fc)
 	kubeMajorVer, kubeMinorVer := config.GetKubeVersion()
 	k8sclient.New(config.GetSchedulerName(), config.GetKubeConfig(), kubeMajorVer, kubeMinorVer, config.GetFirmamentAddress())
+	batchclient.New(config.GetKubeConfig(), config.GetFirmamentAddress())
+
 }

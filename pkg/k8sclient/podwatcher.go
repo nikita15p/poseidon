@@ -51,6 +51,7 @@ const (
 	// CreatedByAnnotation represents the original Kubernetes `kubernetes.io/created-by` annotation.
 	CreatedByAnnotation      = "kubernetes.io/created-by"
 	GangSchedulingAnnotation = "firmament-gang-scheduling"
+	PodGroupAnnotation       = "scheduling.k8s.io/group-name"
 )
 
 // SortNodeSelectorsKey sort node selectors keys and return an slice of sorted keys.
@@ -479,6 +480,9 @@ func (pw *PodWatcher) podWorker() {
 							jd = pw.createNewJob(pod.OwnerRef)
 							// get requirement for gang scheduling if enabled
 							jd = pw.updateGangSchedulingrequireent(pod, jd)
+							//get pod group name
+							pw.updatePodGroupName(pod, jd)
+							glog.V(2).Info("\n +++++ Pod Group name Added", jd.PodGroupName)
 							jobIDToJD[jobID] = jd
 							jobNumTasksToRemove[jobID] = 0
 						}
@@ -1182,4 +1186,13 @@ func GetOwnersKindandUid(pod *v1.Pod) (string, string) {
 	}
 
 	return empty, empty
+}
+
+func (pw *PodWatcher) updatePodGroupName(pod *Pod, job *firmament.JobDescriptor) {
+	if len(pod.Annotations) > 0 {
+		pgName, ok := pod.Annotations[PodGroupAnnotation]
+		if ok {
+			job.PodGroupName = pgName
+		}
+	}
 }

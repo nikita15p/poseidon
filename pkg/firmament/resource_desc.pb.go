@@ -19,9 +19,11 @@ limitations under the License.
 
 package firmament
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -49,6 +51,7 @@ var ResourceDescriptor_ResourceState_name = map[int32]string{
 	2: "RESOURCE_BUSY",
 	3: "RESOURCE_LOST",
 }
+
 var ResourceDescriptor_ResourceState_value = map[string]int32{
 	"RESOURCE_UNKNOWN": 0,
 	"RESOURCE_IDLE":    1,
@@ -59,8 +62,9 @@ var ResourceDescriptor_ResourceState_value = map[string]int32{
 func (x ResourceDescriptor_ResourceState) String() string {
 	return proto.EnumName(ResourceDescriptor_ResourceState_name, int32(x))
 }
+
 func (ResourceDescriptor_ResourceState) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_resource_desc_e7dfe46bdff481c1, []int{0, 0}
+	return fileDescriptor_eee6351d237bf030, []int{0, 0}
 }
 
 type ResourceDescriptor_ResourceType int32
@@ -92,6 +96,7 @@ var ResourceDescriptor_ResourceType_name = map[int32]string{
 	9:  "RESOURCE_SOCKET",
 	10: "RESOURCE_COORDINATOR",
 }
+
 var ResourceDescriptor_ResourceType_value = map[string]int32{
 	"RESOURCE_PU":          0,
 	"RESOURCE_CORE":        1,
@@ -109,8 +114,9 @@ var ResourceDescriptor_ResourceType_value = map[string]int32{
 func (x ResourceDescriptor_ResourceType) String() string {
 	return proto.EnumName(ResourceDescriptor_ResourceType_name, int32(x))
 }
+
 func (ResourceDescriptor_ResourceType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_resource_desc_e7dfe46bdff481c1, []int{0, 1}
+	return fileDescriptor_eee6351d237bf030, []int{0, 1}
 }
 
 type ResourceDescriptor struct {
@@ -162,16 +168,17 @@ func (m *ResourceDescriptor) Reset()         { *m = ResourceDescriptor{} }
 func (m *ResourceDescriptor) String() string { return proto.CompactTextString(m) }
 func (*ResourceDescriptor) ProtoMessage()    {}
 func (*ResourceDescriptor) Descriptor() ([]byte, []int) {
-	return fileDescriptor_resource_desc_e7dfe46bdff481c1, []int{0}
+	return fileDescriptor_eee6351d237bf030, []int{0}
 }
+
 func (m *ResourceDescriptor) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ResourceDescriptor.Unmarshal(m, b)
 }
 func (m *ResourceDescriptor) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ResourceDescriptor.Marshal(b, m, deterministic)
 }
-func (dst *ResourceDescriptor) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ResourceDescriptor.Merge(dst, src)
+func (m *ResourceDescriptor) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ResourceDescriptor.Merge(m, src)
 }
 func (m *ResourceDescriptor) XXX_Size() int {
 	return xxx_messageInfo_ResourceDescriptor.Size(m)
@@ -358,14 +365,14 @@ func (m *ResourceDescriptor) GetMaxPods() uint64 {
 }
 
 func init() {
-	proto.RegisterType((*ResourceDescriptor)(nil), "firmament.ResourceDescriptor")
 	proto.RegisterEnum("firmament.ResourceDescriptor_ResourceState", ResourceDescriptor_ResourceState_name, ResourceDescriptor_ResourceState_value)
 	proto.RegisterEnum("firmament.ResourceDescriptor_ResourceType", ResourceDescriptor_ResourceType_name, ResourceDescriptor_ResourceType_value)
+	proto.RegisterType((*ResourceDescriptor)(nil), "firmament.ResourceDescriptor")
 }
 
-func init() { proto.RegisterFile("resource_desc.proto", fileDescriptor_resource_desc_e7dfe46bdff481c1) }
+func init() { proto.RegisterFile("resource_desc.proto", fileDescriptor_eee6351d237bf030) }
 
-var fileDescriptor_resource_desc_e7dfe46bdff481c1 = []byte{
+var fileDescriptor_eee6351d237bf030 = []byte{
 	// 862 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x95, 0xdf, 0x6e, 0x22, 0x37,
 	0x14, 0xc6, 0x4b, 0x20, 0x24, 0x31, 0xff, 0x1c, 0x93, 0x6c, 0xbd, 0x59, 0x35, 0x62, 0xb3, 0x6a,

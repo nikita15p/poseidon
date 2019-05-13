@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package firmament;
+
+message PodGroupDescriptor {
+    uint64 uid = 1;
+    int32 minMember = 2;
+    string name = 3;
+    string queue = 4;
+}
+
+

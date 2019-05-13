@@ -84,11 +84,12 @@ func New(schedulerName string, kubeConfig string, kubeVersionMajor, kubeVersionM
 	if err != nil {
 		glog.Fatalf("Failed to create connection: %v", err)
 	}
-	fc, conn, err := firmament.New(firmamentAddress)
+	fc, _, err := firmament.New(firmamentAddress)
 	if err != nil {
 		glog.Fatalf("Failed to connect to Firmament: %v", err)
 	}
-	defer conn.Close()
+	//defer conn.Close()
+
 	glog.Info("k8s newclient called")
 	stopCh := make(chan struct{})
 	go NewPodWatcher(kubeVersionMajor, kubeVersionMinor, schedulerName, ClientSet, fc).Run(stopCh, 10)
@@ -96,7 +97,7 @@ func New(schedulerName string, kubeConfig string, kubeVersionMajor, kubeVersionM
 	go NewK8sPodWatcher(kubeVersionMajor, kubeVersionMinor, schedulerName, ClientSet, fc).controller.Run(stopCh)
 
 	// We block here.
-	<-stopCh
+	//<-stopCh
 }
 
 func init() {

@@ -19,9 +19,11 @@ limitations under the License.
 
 package firmament
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -46,16 +48,17 @@ func (m *AvoidPodsAnnotation) Reset()         { *m = AvoidPodsAnnotation{} }
 func (m *AvoidPodsAnnotation) String() string { return proto.CompactTextString(m) }
 func (*AvoidPodsAnnotation) ProtoMessage()    {}
 func (*AvoidPodsAnnotation) Descriptor() ([]byte, []int) {
-	return fileDescriptor_avoid_pods_annotation_a4cb1688e050de5b, []int{0}
+	return fileDescriptor_ac1d513f10f0ebd8, []int{0}
 }
+
 func (m *AvoidPodsAnnotation) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AvoidPodsAnnotation.Unmarshal(m, b)
 }
 func (m *AvoidPodsAnnotation) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_AvoidPodsAnnotation.Marshal(b, m, deterministic)
 }
-func (dst *AvoidPodsAnnotation) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AvoidPodsAnnotation.Merge(dst, src)
+func (m *AvoidPodsAnnotation) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AvoidPodsAnnotation.Merge(m, src)
 }
 func (m *AvoidPodsAnnotation) XXX_Size() int {
 	return xxx_messageInfo_AvoidPodsAnnotation.Size(m)
@@ -84,11 +87,9 @@ func init() {
 	proto.RegisterType((*AvoidPodsAnnotation)(nil), "firmament.AvoidPodsAnnotation")
 }
 
-func init() {
-	proto.RegisterFile("avoid_pods_annotation.proto", fileDescriptor_avoid_pods_annotation_a4cb1688e050de5b)
-}
+func init() { proto.RegisterFile("avoid_pods_annotation.proto", fileDescriptor_ac1d513f10f0ebd8) }
 
-var fileDescriptor_avoid_pods_annotation_a4cb1688e050de5b = []byte{
+var fileDescriptor_ac1d513f10f0ebd8 = []byte{
 	// 113 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0x4e, 0x2c, 0xcb, 0xcf,
 	0x4c, 0x89, 0x2f, 0xc8, 0x4f, 0x29, 0x8e, 0x4f, 0xcc, 0xcb, 0xcb, 0x2f, 0x49, 0x2c, 0xc9, 0xcc,

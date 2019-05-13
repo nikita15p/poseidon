@@ -8,7 +8,6 @@ load(
 go_library(
     name = "go_default_library",
     srcs = ["kube_features.go"],
-    importmap = "github.com/kubernetes-sigs/poseidon/vendor/k8s.io/kubernetes/pkg/features",
     importpath = "k8s.io/kubernetes/pkg/features",
     deps = [
         "//vendor/k8s.io/apiextensions-apiserver/pkg/features:go_default_library",

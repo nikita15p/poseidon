@@ -13,18 +13,17 @@ go_library(
         "types.go",
         "zz_generated.deepcopy.go",
     ],
-    importmap = "github.com/kubernetes-sigs/poseidon/vendor/k8s.io/kubernetes/pkg/apis/extensions",
     importpath = "k8s.io/kubernetes/pkg/apis/extensions",
     deps = [
+        "//pkg/apis/autoscaling:go_default_library",
+        "//pkg/apis/core:go_default_library",
+        "//pkg/apis/networking:go_default_library",
+        "//pkg/apis/policy:go_default_library",
         "//vendor/k8s.io/apimachinery/pkg/api/resource:go_default_library",
         "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:go_default_library",
         "//vendor/k8s.io/apimachinery/pkg/runtime:go_default_library",
         "//vendor/k8s.io/apimachinery/pkg/runtime/schema:go_default_library",
         "//vendor/k8s.io/apimachinery/pkg/util/intstr:go_default_library",
-        "//vendor/k8s.io/kubernetes/pkg/apis/autoscaling:go_default_library",
-        "//vendor/k8s.io/kubernetes/pkg/apis/core:go_default_library",
-        "//vendor/k8s.io/kubernetes/pkg/apis/networking:go_default_library",
-        "//vendor/k8s.io/kubernetes/pkg/apis/policy:go_default_library",
     ],
 )
 

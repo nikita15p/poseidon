@@ -227,3 +227,95 @@ func AddTaskInfo(client FirmamentSchedulerClient, ts *TaskInfo) {
 		grpclog.Fatalf("%v.AddTaskInfo(_) = _, %v: ", client, err)
 	}
 }
+
+// QueueAdded tells firmament server the given queue is added.
+func QueueAdded(client FirmamentSchedulerClient, qd *QueueDescriptor) {
+	qAddedResp, err := client.QueueAdded(context.Background(), qd)
+	glog.Infof("\n Queue response is %v", qAddedResp)
+	if err != nil {
+		grpclog.Fatalf("%v.QueueAdded(_) = _, %v: ", client, err)
+	}
+	switch qAddedResp.Type {
+	case QueueReplyType_QUEUE_ALREADY_ADDED:
+		glog.Infof("Tried to add existing queue %s", qd.Uid)
+	case QueueReplyType_QUEUE_ADDED_OK:
+	default:
+		panic(fmt.Sprintf("Unexpected QueueAdded response %v for queue %v", qAddedResp, qd.Uid))
+	}
+}
+
+// QueueRemoved tells firmament server the given queue is removed.
+func QueueRemoved(client FirmamentSchedulerClient, qd *QueueDescriptor) {
+	qRemovedResp, err := client.QueueRemoved(context.Background(), qd)
+	if err != nil {
+		grpclog.Fatalf("%v.QueueRemoved(_) = _, %v: ", client, err)
+	}
+	switch qRemovedResp.Type {
+	case QueueReplyType_QUEUE_NOT_FOUND:
+		glog.Fatalf("Tried to remove non-existing queue %s", qd.Uid)
+	case QueueReplyType_QUEUE_REMOVED_OK:
+	default:
+		panic(fmt.Sprintf("Unexpected QueueRemoved response %v for queue %v", qRemovedResp, qd.Uid))
+	}
+}
+
+// QueueUpdated tells firmament server the given queue is updated.
+func QueueUpdated(client FirmamentSchedulerClient, qd *QueueDescriptor) {
+	qUpdatedResp, err := client.QueueUpdated(context.Background(), qd)
+	if err != nil {
+		grpclog.Fatalf("%v.QueueUpdated(_) = _, %v: ", client, err)
+	}
+	switch qUpdatedResp.Type {
+	case QueueReplyType_QUEUE_NOT_FOUND:
+		glog.Fatalf("Tried to updated non-existing queue %s", qd.Uid)
+	case QueueReplyType_QUEUE_UPDATED_OK:
+	default:
+		panic(fmt.Sprintf("Unexpected QueueUpdated response %v for queue %v", qUpdatedResp, qd.Uid))
+	}
+}
+
+// PodGroupAdded tells firmament server the given pod group is added.
+func PodGroupAdded(client FirmamentSchedulerClient, pgd *PodGroupDescriptor) {
+	pgAddedResp, err := client.PodGroupAdded(context.Background(), pgd)
+	glog.Infof("\n Pod Group response is %v", pgAddedResp)
+	if err != nil {
+		grpclog.Fatalf("%v.QueueAdded(_) = _, %v: ", client, err)
+	}
+	switch pgAddedResp.Type {
+	case PodGroupReplyType_PODGROUP_ALREADY_ADDED:
+		glog.Infof("Tried to add existing pod group %s", pgd.Uid)
+	case PodGroupReplyType_PODGROUP_ADDED_OK:
+	default:
+		panic(fmt.Sprintf("Unexpected PodGroupAdded response %v for pod group %v", pgAddedResp, pgd.Uid))
+	}
+}
+
+// PodGroupRemoved tells firmament server the given pod group is removed.
+func PodGroupRemoved(client FirmamentSchedulerClient, pgd *PodGroupDescriptor) {
+	pgRemovedResp, err := client.PodGroupRemoved(context.Background(), pgd)
+	if err != nil {
+		grpclog.Fatalf("%v.PodGroupRemoved(_) = _, %v: ", client, err)
+	}
+	switch pgRemovedResp.Type {
+	case PodGroupReplyType_PODGROUP_NOT_FOUND:
+		glog.Fatalf("Tried to remove non-existing pod group %s", pgd.Uid)
+	case PodGroupReplyType_PODGROUP_REMOVED_OK:
+	default:
+		panic(fmt.Sprintf("Unexpected PodGroupRemoved response %v for pod group %v", pgRemovedResp, pgd.Uid))
+	}
+}
+
+// PodGroupUpdated tells firmament server the given pod group is updated.
+func PodGroupUpdated(client FirmamentSchedulerClient, pgd *PodGroupDescriptor) {
+	pgUpdatedResp, err := client.PodGroupUpdated(context.Background(), pgd)
+	if err != nil {
+		grpclog.Fatalf("%v.PodGroupUpdated(_) = _, %v: ", client, err)
+	}
+	switch pgUpdatedResp.Type {
+	case PodGroupReplyType_PODGROUP_NOT_FOUND:
+		glog.Fatalf("Tried to updated non-existing pod group %s", pgd.Uid)
+	case PodGroupReplyType_PODGROUP_UPDATED_OK:
+	default:
+		panic(fmt.Sprintf("Unexpected PodGroupUpdated response %v for pod group %v", pgUpdatedResp, pgd.Uid))
+	}
+}

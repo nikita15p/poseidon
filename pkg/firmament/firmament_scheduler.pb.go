@@ -19,9 +19,11 @@ limitations under the License.
 
 package firmament
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	math "math"
+)
 
 import (
 	context "golang.org/x/net/context"
@@ -64,6 +66,7 @@ var TaskReplyType_name = map[int32]string{
 	7: "TASK_ALREADY_SUBMITTED",
 	8: "TASK_STATE_NOT_CREATED",
 }
+
 var TaskReplyType_value = map[string]int32{
 	"TASK_COMPLETED_OK":      0,
 	"TASK_SUBMITTED_OK":      1,
@@ -79,8 +82,9 @@ var TaskReplyType_value = map[string]int32{
 func (x TaskReplyType) String() string {
 	return proto.EnumName(TaskReplyType_name, int32(x))
 }
+
 func (TaskReplyType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{0}
+	return fileDescriptor_fc144782636f334d, []int{0}
 }
 
 type NodeReplyType int32
@@ -102,6 +106,7 @@ var NodeReplyType_name = map[int32]string{
 	4: "NODE_NOT_FOUND",
 	5: "NODE_ALREADY_EXISTS",
 }
+
 var NodeReplyType_value = map[string]int32{
 	"NODE_ADDED_OK":       0,
 	"NODE_FAILED_OK":      1,
@@ -114,8 +119,9 @@ var NodeReplyType_value = map[string]int32{
 func (x NodeReplyType) String() string {
 	return proto.EnumName(NodeReplyType_name, int32(x))
 }
+
 func (NodeReplyType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{1}
+	return fileDescriptor_fc144782636f334d, []int{1}
 }
 
 type ServingStatus int32
@@ -131,6 +137,7 @@ var ServingStatus_name = map[int32]string{
 	1: "SERVING",
 	2: "NOT_SERVING",
 }
+
 var ServingStatus_value = map[string]int32{
 	"UNKNOWN":     0,
 	"SERVING":     1,
@@ -140,8 +147,9 @@ var ServingStatus_value = map[string]int32{
 func (x ServingStatus) String() string {
 	return proto.EnumName(ServingStatus_name, int32(x))
 }
+
 func (ServingStatus) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{2}
+	return fileDescriptor_fc144782636f334d, []int{2}
 }
 
 type TaskInfoReplyType int32
@@ -159,6 +167,7 @@ var TaskInfoReplyType_name = map[int32]string{
 	3: "TASKINFO_SUBMIT_FAILED",
 	4: "TASKINFO_REMOVE_FAILED",
 }
+
 var TaskInfoReplyType_value = map[string]int32{
 	"TASKINFO_SUBMITTED_OK":  0,
 	"TASKINFO_REMOVED_OK":    2,
@@ -169,8 +178,9 @@ var TaskInfoReplyType_value = map[string]int32{
 func (x TaskInfoReplyType) String() string {
 	return proto.EnumName(TaskInfoReplyType_name, int32(x))
 }
+
 func (TaskInfoReplyType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{3}
+	return fileDescriptor_fc144782636f334d, []int{3}
 }
 
 type TaskInfoType int32
@@ -184,6 +194,7 @@ var TaskInfoType_name = map[int32]string{
 	0: "TASKINFO_ADD",
 	1: "TASKINFO_REMOVE",
 }
+
 var TaskInfoType_value = map[string]int32{
 	"TASKINFO_ADD":    0,
 	"TASKINFO_REMOVE": 1,
@@ -192,8 +203,89 @@ var TaskInfoType_value = map[string]int32{
 func (x TaskInfoType) String() string {
 	return proto.EnumName(TaskInfoType_name, int32(x))
 }
+
 func (TaskInfoType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{4}
+	return fileDescriptor_fc144782636f334d, []int{4}
+}
+
+type QueueReplyType int32
+
+const (
+	QueueReplyType_QUEUE_ADDED_OK      QueueReplyType = 0
+	QueueReplyType_QUEUE_UPDATED_OK    QueueReplyType = 1
+	QueueReplyType_QUEUE_REMOVED_OK    QueueReplyType = 2
+	QueueReplyType_QUEUE_FAILED_OK     QueueReplyType = 3
+	QueueReplyType_QUEUE_ALREADY_ADDED QueueReplyType = 4
+	QueueReplyType_QUEUE_NOT_FOUND     QueueReplyType = 5
+	QueueReplyType_QUEUE_INVALID_OK    QueueReplyType = 6
+)
+
+var QueueReplyType_name = map[int32]string{
+	0: "QUEUE_ADDED_OK",
+	1: "QUEUE_UPDATED_OK",
+	2: "QUEUE_REMOVED_OK",
+	3: "QUEUE_FAILED_OK",
+	4: "QUEUE_ALREADY_ADDED",
+	5: "QUEUE_NOT_FOUND",
+	6: "QUEUE_INVALID_OK",
+}
+
+var QueueReplyType_value = map[string]int32{
+	"QUEUE_ADDED_OK":      0,
+	"QUEUE_UPDATED_OK":    1,
+	"QUEUE_REMOVED_OK":    2,
+	"QUEUE_FAILED_OK":     3,
+	"QUEUE_ALREADY_ADDED": 4,
+	"QUEUE_NOT_FOUND":     5,
+	"QUEUE_INVALID_OK":    6,
+}
+
+func (x QueueReplyType) String() string {
+	return proto.EnumName(QueueReplyType_name, int32(x))
+}
+
+func (QueueReplyType) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_fc144782636f334d, []int{5}
+}
+
+type PodGroupReplyType int32
+
+const (
+	PodGroupReplyType_PODGROUP_ADDED_OK      PodGroupReplyType = 0
+	PodGroupReplyType_PODGROUP_UPDATED_OK    PodGroupReplyType = 1
+	PodGroupReplyType_PODGROUP_REMOVED_OK    PodGroupReplyType = 2
+	PodGroupReplyType_PODGROUP_FAILED_OK     PodGroupReplyType = 3
+	PodGroupReplyType_PODGROUP_ALREADY_ADDED PodGroupReplyType = 4
+	PodGroupReplyType_PODGROUP_NOT_FOUND     PodGroupReplyType = 5
+	PodGroupReplyType_PODGROUP_INVALID_OK    PodGroupReplyType = 6
+)
+
+var PodGroupReplyType_name = map[int32]string{
+	0: "PODGROUP_ADDED_OK",
+	1: "PODGROUP_UPDATED_OK",
+	2: "PODGROUP_REMOVED_OK",
+	3: "PODGROUP_FAILED_OK",
+	4: "PODGROUP_ALREADY_ADDED",
+	5: "PODGROUP_NOT_FOUND",
+	6: "PODGROUP_INVALID_OK",
+}
+
+var PodGroupReplyType_value = map[string]int32{
+	"PODGROUP_ADDED_OK":      0,
+	"PODGROUP_UPDATED_OK":    1,
+	"PODGROUP_REMOVED_OK":    2,
+	"PODGROUP_FAILED_OK":     3,
+	"PODGROUP_ALREADY_ADDED": 4,
+	"PODGROUP_NOT_FOUND":     5,
+	"PODGROUP_INVALID_OK":    6,
+}
+
+func (x PodGroupReplyType) String() string {
+	return proto.EnumName(PodGroupReplyType_name, int32(x))
+}
+
+func (PodGroupReplyType) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_fc144782636f334d, []int{6}
 }
 
 type ScheduleRequest struct {
@@ -206,16 +298,17 @@ func (m *ScheduleRequest) Reset()         { *m = ScheduleRequest{} }
 func (m *ScheduleRequest) String() string { return proto.CompactTextString(m) }
 func (*ScheduleRequest) ProtoMessage()    {}
 func (*ScheduleRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{0}
+	return fileDescriptor_fc144782636f334d, []int{0}
 }
+
 func (m *ScheduleRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ScheduleRequest.Unmarshal(m, b)
 }
 func (m *ScheduleRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ScheduleRequest.Marshal(b, m, deterministic)
 }
-func (dst *ScheduleRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ScheduleRequest.Merge(dst, src)
+func (m *ScheduleRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ScheduleRequest.Merge(m, src)
 }
 func (m *ScheduleRequest) XXX_Size() int {
 	return xxx_messageInfo_ScheduleRequest.Size(m)
@@ -238,16 +331,17 @@ func (m *SchedulingDeltas) Reset()         { *m = SchedulingDeltas{} }
 func (m *SchedulingDeltas) String() string { return proto.CompactTextString(m) }
 func (*SchedulingDeltas) ProtoMessage()    {}
 func (*SchedulingDeltas) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{1}
+	return fileDescriptor_fc144782636f334d, []int{1}
 }
+
 func (m *SchedulingDeltas) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SchedulingDeltas.Unmarshal(m, b)
 }
 func (m *SchedulingDeltas) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_SchedulingDeltas.Marshal(b, m, deterministic)
 }
-func (dst *SchedulingDeltas) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SchedulingDeltas.Merge(dst, src)
+func (m *SchedulingDeltas) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SchedulingDeltas.Merge(m, src)
 }
 func (m *SchedulingDeltas) XXX_Size() int {
 	return xxx_messageInfo_SchedulingDeltas.Size(m)
@@ -283,16 +377,17 @@ func (m *TaskCompletedResponse) Reset()         { *m = TaskCompletedResponse{} }
 func (m *TaskCompletedResponse) String() string { return proto.CompactTextString(m) }
 func (*TaskCompletedResponse) ProtoMessage()    {}
 func (*TaskCompletedResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{2}
+	return fileDescriptor_fc144782636f334d, []int{2}
 }
+
 func (m *TaskCompletedResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TaskCompletedResponse.Unmarshal(m, b)
 }
 func (m *TaskCompletedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TaskCompletedResponse.Marshal(b, m, deterministic)
 }
-func (dst *TaskCompletedResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TaskCompletedResponse.Merge(dst, src)
+func (m *TaskCompletedResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TaskCompletedResponse.Merge(m, src)
 }
 func (m *TaskCompletedResponse) XXX_Size() int {
 	return xxx_messageInfo_TaskCompletedResponse.Size(m)
@@ -322,16 +417,17 @@ func (m *TaskDescription) Reset()         { *m = TaskDescription{} }
 func (m *TaskDescription) String() string { return proto.CompactTextString(m) }
 func (*TaskDescription) ProtoMessage()    {}
 func (*TaskDescription) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{3}
+	return fileDescriptor_fc144782636f334d, []int{3}
 }
+
 func (m *TaskDescription) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TaskDescription.Unmarshal(m, b)
 }
 func (m *TaskDescription) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TaskDescription.Marshal(b, m, deterministic)
 }
-func (dst *TaskDescription) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TaskDescription.Merge(dst, src)
+func (m *TaskDescription) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TaskDescription.Merge(m, src)
 }
 func (m *TaskDescription) XXX_Size() int {
 	return xxx_messageInfo_TaskDescription.Size(m)
@@ -367,16 +463,17 @@ func (m *TaskSubmittedResponse) Reset()         { *m = TaskSubmittedResponse{} }
 func (m *TaskSubmittedResponse) String() string { return proto.CompactTextString(m) }
 func (*TaskSubmittedResponse) ProtoMessage()    {}
 func (*TaskSubmittedResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{4}
+	return fileDescriptor_fc144782636f334d, []int{4}
 }
+
 func (m *TaskSubmittedResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TaskSubmittedResponse.Unmarshal(m, b)
 }
 func (m *TaskSubmittedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TaskSubmittedResponse.Marshal(b, m, deterministic)
 }
-func (dst *TaskSubmittedResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TaskSubmittedResponse.Merge(dst, src)
+func (m *TaskSubmittedResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TaskSubmittedResponse.Merge(m, src)
 }
 func (m *TaskSubmittedResponse) XXX_Size() int {
 	return xxx_messageInfo_TaskSubmittedResponse.Size(m)
@@ -405,16 +502,17 @@ func (m *TaskRemovedResponse) Reset()         { *m = TaskRemovedResponse{} }
 func (m *TaskRemovedResponse) String() string { return proto.CompactTextString(m) }
 func (*TaskRemovedResponse) ProtoMessage()    {}
 func (*TaskRemovedResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{5}
+	return fileDescriptor_fc144782636f334d, []int{5}
 }
+
 func (m *TaskRemovedResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TaskRemovedResponse.Unmarshal(m, b)
 }
 func (m *TaskRemovedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TaskRemovedResponse.Marshal(b, m, deterministic)
 }
-func (dst *TaskRemovedResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TaskRemovedResponse.Merge(dst, src)
+func (m *TaskRemovedResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TaskRemovedResponse.Merge(m, src)
 }
 func (m *TaskRemovedResponse) XXX_Size() int {
 	return xxx_messageInfo_TaskRemovedResponse.Size(m)
@@ -443,16 +541,17 @@ func (m *TaskFailedResponse) Reset()         { *m = TaskFailedResponse{} }
 func (m *TaskFailedResponse) String() string { return proto.CompactTextString(m) }
 func (*TaskFailedResponse) ProtoMessage()    {}
 func (*TaskFailedResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{6}
+	return fileDescriptor_fc144782636f334d, []int{6}
 }
+
 func (m *TaskFailedResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TaskFailedResponse.Unmarshal(m, b)
 }
 func (m *TaskFailedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TaskFailedResponse.Marshal(b, m, deterministic)
 }
-func (dst *TaskFailedResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TaskFailedResponse.Merge(dst, src)
+func (m *TaskFailedResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TaskFailedResponse.Merge(m, src)
 }
 func (m *TaskFailedResponse) XXX_Size() int {
 	return xxx_messageInfo_TaskFailedResponse.Size(m)
@@ -481,16 +580,17 @@ func (m *TaskUpdatedResponse) Reset()         { *m = TaskUpdatedResponse{} }
 func (m *TaskUpdatedResponse) String() string { return proto.CompactTextString(m) }
 func (*TaskUpdatedResponse) ProtoMessage()    {}
 func (*TaskUpdatedResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{7}
+	return fileDescriptor_fc144782636f334d, []int{7}
 }
+
 func (m *TaskUpdatedResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TaskUpdatedResponse.Unmarshal(m, b)
 }
 func (m *TaskUpdatedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TaskUpdatedResponse.Marshal(b, m, deterministic)
 }
-func (dst *TaskUpdatedResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TaskUpdatedResponse.Merge(dst, src)
+func (m *TaskUpdatedResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TaskUpdatedResponse.Merge(m, src)
 }
 func (m *TaskUpdatedResponse) XXX_Size() int {
 	return xxx_messageInfo_TaskUpdatedResponse.Size(m)
@@ -519,16 +619,17 @@ func (m *NodeAddedResponse) Reset()         { *m = NodeAddedResponse{} }
 func (m *NodeAddedResponse) String() string { return proto.CompactTextString(m) }
 func (*NodeAddedResponse) ProtoMessage()    {}
 func (*NodeAddedResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{8}
+	return fileDescriptor_fc144782636f334d, []int{8}
 }
+
 func (m *NodeAddedResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_NodeAddedResponse.Unmarshal(m, b)
 }
 func (m *NodeAddedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_NodeAddedResponse.Marshal(b, m, deterministic)
 }
-func (dst *NodeAddedResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_NodeAddedResponse.Merge(dst, src)
+func (m *NodeAddedResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_NodeAddedResponse.Merge(m, src)
 }
 func (m *NodeAddedResponse) XXX_Size() int {
 	return xxx_messageInfo_NodeAddedResponse.Size(m)
@@ -557,16 +658,17 @@ func (m *NodeRemovedResponse) Reset()         { *m = NodeRemovedResponse{} }
 func (m *NodeRemovedResponse) String() string { return proto.CompactTextString(m) }
 func (*NodeRemovedResponse) ProtoMessage()    {}
 func (*NodeRemovedResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{9}
+	return fileDescriptor_fc144782636f334d, []int{9}
 }
+
 func (m *NodeRemovedResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_NodeRemovedResponse.Unmarshal(m, b)
 }
 func (m *NodeRemovedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_NodeRemovedResponse.Marshal(b, m, deterministic)
 }
-func (dst *NodeRemovedResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_NodeRemovedResponse.Merge(dst, src)
+func (m *NodeRemovedResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_NodeRemovedResponse.Merge(m, src)
 }
 func (m *NodeRemovedResponse) XXX_Size() int {
 	return xxx_messageInfo_NodeRemovedResponse.Size(m)
@@ -595,16 +697,17 @@ func (m *NodeFailedResponse) Reset()         { *m = NodeFailedResponse{} }
 func (m *NodeFailedResponse) String() string { return proto.CompactTextString(m) }
 func (*NodeFailedResponse) ProtoMessage()    {}
 func (*NodeFailedResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{10}
+	return fileDescriptor_fc144782636f334d, []int{10}
 }
+
 func (m *NodeFailedResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_NodeFailedResponse.Unmarshal(m, b)
 }
 func (m *NodeFailedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_NodeFailedResponse.Marshal(b, m, deterministic)
 }
-func (dst *NodeFailedResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_NodeFailedResponse.Merge(dst, src)
+func (m *NodeFailedResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_NodeFailedResponse.Merge(m, src)
 }
 func (m *NodeFailedResponse) XXX_Size() int {
 	return xxx_messageInfo_NodeFailedResponse.Size(m)
@@ -633,16 +736,17 @@ func (m *NodeUpdatedResponse) Reset()         { *m = NodeUpdatedResponse{} }
 func (m *NodeUpdatedResponse) String() string { return proto.CompactTextString(m) }
 func (*NodeUpdatedResponse) ProtoMessage()    {}
 func (*NodeUpdatedResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{11}
+	return fileDescriptor_fc144782636f334d, []int{11}
 }
+
 func (m *NodeUpdatedResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_NodeUpdatedResponse.Unmarshal(m, b)
 }
 func (m *NodeUpdatedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_NodeUpdatedResponse.Marshal(b, m, deterministic)
 }
-func (dst *NodeUpdatedResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_NodeUpdatedResponse.Merge(dst, src)
+func (m *NodeUpdatedResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_NodeUpdatedResponse.Merge(m, src)
 }
 func (m *NodeUpdatedResponse) XXX_Size() int {
 	return xxx_messageInfo_NodeUpdatedResponse.Size(m)
@@ -671,16 +775,17 @@ func (m *TaskStatsResponse) Reset()         { *m = TaskStatsResponse{} }
 func (m *TaskStatsResponse) String() string { return proto.CompactTextString(m) }
 func (*TaskStatsResponse) ProtoMessage()    {}
 func (*TaskStatsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{12}
+	return fileDescriptor_fc144782636f334d, []int{12}
 }
+
 func (m *TaskStatsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TaskStatsResponse.Unmarshal(m, b)
 }
 func (m *TaskStatsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TaskStatsResponse.Marshal(b, m, deterministic)
 }
-func (dst *TaskStatsResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TaskStatsResponse.Merge(dst, src)
+func (m *TaskStatsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TaskStatsResponse.Merge(m, src)
 }
 func (m *TaskStatsResponse) XXX_Size() int {
 	return xxx_messageInfo_TaskStatsResponse.Size(m)
@@ -709,16 +814,17 @@ func (m *ResourceStatsResponse) Reset()         { *m = ResourceStatsResponse{} }
 func (m *ResourceStatsResponse) String() string { return proto.CompactTextString(m) }
 func (*ResourceStatsResponse) ProtoMessage()    {}
 func (*ResourceStatsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{13}
+	return fileDescriptor_fc144782636f334d, []int{13}
 }
+
 func (m *ResourceStatsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ResourceStatsResponse.Unmarshal(m, b)
 }
 func (m *ResourceStatsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ResourceStatsResponse.Marshal(b, m, deterministic)
 }
-func (dst *ResourceStatsResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ResourceStatsResponse.Merge(dst, src)
+func (m *ResourceStatsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ResourceStatsResponse.Merge(m, src)
 }
 func (m *ResourceStatsResponse) XXX_Size() int {
 	return xxx_messageInfo_ResourceStatsResponse.Size(m)
@@ -747,16 +853,17 @@ func (m *TaskUID) Reset()         { *m = TaskUID{} }
 func (m *TaskUID) String() string { return proto.CompactTextString(m) }
 func (*TaskUID) ProtoMessage()    {}
 func (*TaskUID) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{14}
+	return fileDescriptor_fc144782636f334d, []int{14}
 }
+
 func (m *TaskUID) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TaskUID.Unmarshal(m, b)
 }
 func (m *TaskUID) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TaskUID.Marshal(b, m, deterministic)
 }
-func (dst *TaskUID) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TaskUID.Merge(dst, src)
+func (m *TaskUID) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TaskUID.Merge(m, src)
 }
 func (m *TaskUID) XXX_Size() int {
 	return xxx_messageInfo_TaskUID.Size(m)
@@ -785,16 +892,17 @@ func (m *ResourceUID) Reset()         { *m = ResourceUID{} }
 func (m *ResourceUID) String() string { return proto.CompactTextString(m) }
 func (*ResourceUID) ProtoMessage()    {}
 func (*ResourceUID) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{15}
+	return fileDescriptor_fc144782636f334d, []int{15}
 }
+
 func (m *ResourceUID) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ResourceUID.Unmarshal(m, b)
 }
 func (m *ResourceUID) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ResourceUID.Marshal(b, m, deterministic)
 }
-func (dst *ResourceUID) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ResourceUID.Merge(dst, src)
+func (m *ResourceUID) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ResourceUID.Merge(m, src)
 }
 func (m *ResourceUID) XXX_Size() int {
 	return xxx_messageInfo_ResourceUID.Size(m)
@@ -823,16 +931,17 @@ func (m *HealthCheckRequest) Reset()         { *m = HealthCheckRequest{} }
 func (m *HealthCheckRequest) String() string { return proto.CompactTextString(m) }
 func (*HealthCheckRequest) ProtoMessage()    {}
 func (*HealthCheckRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{16}
+	return fileDescriptor_fc144782636f334d, []int{16}
 }
+
 func (m *HealthCheckRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_HealthCheckRequest.Unmarshal(m, b)
 }
 func (m *HealthCheckRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_HealthCheckRequest.Marshal(b, m, deterministic)
 }
-func (dst *HealthCheckRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_HealthCheckRequest.Merge(dst, src)
+func (m *HealthCheckRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_HealthCheckRequest.Merge(m, src)
 }
 func (m *HealthCheckRequest) XXX_Size() int {
 	return xxx_messageInfo_HealthCheckRequest.Size(m)
@@ -861,16 +970,17 @@ func (m *HealthCheckResponse) Reset()         { *m = HealthCheckResponse{} }
 func (m *HealthCheckResponse) String() string { return proto.CompactTextString(m) }
 func (*HealthCheckResponse) ProtoMessage()    {}
 func (*HealthCheckResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{17}
+	return fileDescriptor_fc144782636f334d, []int{17}
 }
+
 func (m *HealthCheckResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_HealthCheckResponse.Unmarshal(m, b)
 }
 func (m *HealthCheckResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_HealthCheckResponse.Marshal(b, m, deterministic)
 }
-func (dst *HealthCheckResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_HealthCheckResponse.Merge(dst, src)
+func (m *HealthCheckResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_HealthCheckResponse.Merge(m, src)
 }
 func (m *HealthCheckResponse) XXX_Size() int {
 	return xxx_messageInfo_HealthCheckResponse.Size(m)
@@ -905,16 +1015,17 @@ func (m *TaskInfo) Reset()         { *m = TaskInfo{} }
 func (m *TaskInfo) String() string { return proto.CompactTextString(m) }
 func (*TaskInfo) ProtoMessage()    {}
 func (*TaskInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{18}
+	return fileDescriptor_fc144782636f334d, []int{18}
 }
+
 func (m *TaskInfo) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TaskInfo.Unmarshal(m, b)
 }
 func (m *TaskInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TaskInfo.Marshal(b, m, deterministic)
 }
-func (dst *TaskInfo) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TaskInfo.Merge(dst, src)
+func (m *TaskInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TaskInfo.Merge(m, src)
 }
 func (m *TaskInfo) XXX_Size() int {
 	return xxx_messageInfo_TaskInfo.Size(m)
@@ -978,16 +1089,17 @@ func (m *TaskInfoResponse) Reset()         { *m = TaskInfoResponse{} }
 func (m *TaskInfoResponse) String() string { return proto.CompactTextString(m) }
 func (*TaskInfoResponse) ProtoMessage()    {}
 func (*TaskInfoResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92, []int{19}
+	return fileDescriptor_fc144782636f334d, []int{19}
 }
+
 func (m *TaskInfoResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TaskInfoResponse.Unmarshal(m, b)
 }
 func (m *TaskInfoResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TaskInfoResponse.Marshal(b, m, deterministic)
 }
-func (dst *TaskInfoResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TaskInfoResponse.Merge(dst, src)
+func (m *TaskInfoResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TaskInfoResponse.Merge(m, src)
 }
 func (m *TaskInfoResponse) XXX_Size() int {
 	return xxx_messageInfo_TaskInfoResponse.Size(m)
@@ -1005,7 +1117,248 @@ func (m *TaskInfoResponse) GetType() TaskInfoReplyType {
 	return TaskInfoReplyType_TASKINFO_SUBMITTED_OK
 }
 
+type QueueAddedResponse struct {
+	Type                 QueueReplyType `protobuf:"varint,1,opt,name=type,proto3,enum=firmament.QueueReplyType" json:"type,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *QueueAddedResponse) Reset()         { *m = QueueAddedResponse{} }
+func (m *QueueAddedResponse) String() string { return proto.CompactTextString(m) }
+func (*QueueAddedResponse) ProtoMessage()    {}
+func (*QueueAddedResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_fc144782636f334d, []int{20}
+}
+
+func (m *QueueAddedResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_QueueAddedResponse.Unmarshal(m, b)
+}
+func (m *QueueAddedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_QueueAddedResponse.Marshal(b, m, deterministic)
+}
+func (m *QueueAddedResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueueAddedResponse.Merge(m, src)
+}
+func (m *QueueAddedResponse) XXX_Size() int {
+	return xxx_messageInfo_QueueAddedResponse.Size(m)
+}
+func (m *QueueAddedResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueueAddedResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueueAddedResponse proto.InternalMessageInfo
+
+func (m *QueueAddedResponse) GetType() QueueReplyType {
+	if m != nil {
+		return m.Type
+	}
+	return QueueReplyType_QUEUE_ADDED_OK
+}
+
+type QueueUpdateResponse struct {
+	Type                 QueueReplyType `protobuf:"varint,1,opt,name=type,proto3,enum=firmament.QueueReplyType" json:"type,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *QueueUpdateResponse) Reset()         { *m = QueueUpdateResponse{} }
+func (m *QueueUpdateResponse) String() string { return proto.CompactTextString(m) }
+func (*QueueUpdateResponse) ProtoMessage()    {}
+func (*QueueUpdateResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_fc144782636f334d, []int{21}
+}
+
+func (m *QueueUpdateResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_QueueUpdateResponse.Unmarshal(m, b)
+}
+func (m *QueueUpdateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_QueueUpdateResponse.Marshal(b, m, deterministic)
+}
+func (m *QueueUpdateResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueueUpdateResponse.Merge(m, src)
+}
+func (m *QueueUpdateResponse) XXX_Size() int {
+	return xxx_messageInfo_QueueUpdateResponse.Size(m)
+}
+func (m *QueueUpdateResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueueUpdateResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueueUpdateResponse proto.InternalMessageInfo
+
+func (m *QueueUpdateResponse) GetType() QueueReplyType {
+	if m != nil {
+		return m.Type
+	}
+	return QueueReplyType_QUEUE_ADDED_OK
+}
+
+type QueueRemoveResponse struct {
+	Type                 QueueReplyType `protobuf:"varint,1,opt,name=type,proto3,enum=firmament.QueueReplyType" json:"type,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *QueueRemoveResponse) Reset()         { *m = QueueRemoveResponse{} }
+func (m *QueueRemoveResponse) String() string { return proto.CompactTextString(m) }
+func (*QueueRemoveResponse) ProtoMessage()    {}
+func (*QueueRemoveResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_fc144782636f334d, []int{22}
+}
+
+func (m *QueueRemoveResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_QueueRemoveResponse.Unmarshal(m, b)
+}
+func (m *QueueRemoveResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_QueueRemoveResponse.Marshal(b, m, deterministic)
+}
+func (m *QueueRemoveResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueueRemoveResponse.Merge(m, src)
+}
+func (m *QueueRemoveResponse) XXX_Size() int {
+	return xxx_messageInfo_QueueRemoveResponse.Size(m)
+}
+func (m *QueueRemoveResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueueRemoveResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueueRemoveResponse proto.InternalMessageInfo
+
+func (m *QueueRemoveResponse) GetType() QueueReplyType {
+	if m != nil {
+		return m.Type
+	}
+	return QueueReplyType_QUEUE_ADDED_OK
+}
+
+type PodGroupAddedResponse struct {
+	Type                 PodGroupReplyType `protobuf:"varint,1,opt,name=type,proto3,enum=firmament.PodGroupReplyType" json:"type,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *PodGroupAddedResponse) Reset()         { *m = PodGroupAddedResponse{} }
+func (m *PodGroupAddedResponse) String() string { return proto.CompactTextString(m) }
+func (*PodGroupAddedResponse) ProtoMessage()    {}
+func (*PodGroupAddedResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_fc144782636f334d, []int{23}
+}
+
+func (m *PodGroupAddedResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PodGroupAddedResponse.Unmarshal(m, b)
+}
+func (m *PodGroupAddedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PodGroupAddedResponse.Marshal(b, m, deterministic)
+}
+func (m *PodGroupAddedResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PodGroupAddedResponse.Merge(m, src)
+}
+func (m *PodGroupAddedResponse) XXX_Size() int {
+	return xxx_messageInfo_PodGroupAddedResponse.Size(m)
+}
+func (m *PodGroupAddedResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_PodGroupAddedResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PodGroupAddedResponse proto.InternalMessageInfo
+
+func (m *PodGroupAddedResponse) GetType() PodGroupReplyType {
+	if m != nil {
+		return m.Type
+	}
+	return PodGroupReplyType_PODGROUP_ADDED_OK
+}
+
+type PodGroupUpdateResponse struct {
+	Type                 PodGroupReplyType `protobuf:"varint,1,opt,name=type,proto3,enum=firmament.PodGroupReplyType" json:"type,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *PodGroupUpdateResponse) Reset()         { *m = PodGroupUpdateResponse{} }
+func (m *PodGroupUpdateResponse) String() string { return proto.CompactTextString(m) }
+func (*PodGroupUpdateResponse) ProtoMessage()    {}
+func (*PodGroupUpdateResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_fc144782636f334d, []int{24}
+}
+
+func (m *PodGroupUpdateResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PodGroupUpdateResponse.Unmarshal(m, b)
+}
+func (m *PodGroupUpdateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PodGroupUpdateResponse.Marshal(b, m, deterministic)
+}
+func (m *PodGroupUpdateResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PodGroupUpdateResponse.Merge(m, src)
+}
+func (m *PodGroupUpdateResponse) XXX_Size() int {
+	return xxx_messageInfo_PodGroupUpdateResponse.Size(m)
+}
+func (m *PodGroupUpdateResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_PodGroupUpdateResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PodGroupUpdateResponse proto.InternalMessageInfo
+
+func (m *PodGroupUpdateResponse) GetType() PodGroupReplyType {
+	if m != nil {
+		return m.Type
+	}
+	return PodGroupReplyType_PODGROUP_ADDED_OK
+}
+
+type PodGroupRemoveResponse struct {
+	Type                 PodGroupReplyType `protobuf:"varint,1,opt,name=type,proto3,enum=firmament.PodGroupReplyType" json:"type,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *PodGroupRemoveResponse) Reset()         { *m = PodGroupRemoveResponse{} }
+func (m *PodGroupRemoveResponse) String() string { return proto.CompactTextString(m) }
+func (*PodGroupRemoveResponse) ProtoMessage()    {}
+func (*PodGroupRemoveResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_fc144782636f334d, []int{25}
+}
+
+func (m *PodGroupRemoveResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PodGroupRemoveResponse.Unmarshal(m, b)
+}
+func (m *PodGroupRemoveResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PodGroupRemoveResponse.Marshal(b, m, deterministic)
+}
+func (m *PodGroupRemoveResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PodGroupRemoveResponse.Merge(m, src)
+}
+func (m *PodGroupRemoveResponse) XXX_Size() int {
+	return xxx_messageInfo_PodGroupRemoveResponse.Size(m)
+}
+func (m *PodGroupRemoveResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_PodGroupRemoveResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PodGroupRemoveResponse proto.InternalMessageInfo
+
+func (m *PodGroupRemoveResponse) GetType() PodGroupReplyType {
+	if m != nil {
+		return m.Type
+	}
+	return PodGroupReplyType_PODGROUP_ADDED_OK
+}
+
 func init() {
+	proto.RegisterEnum("firmament.TaskReplyType", TaskReplyType_name, TaskReplyType_value)
+	proto.RegisterEnum("firmament.NodeReplyType", NodeReplyType_name, NodeReplyType_value)
+	proto.RegisterEnum("firmament.ServingStatus", ServingStatus_name, ServingStatus_value)
+	proto.RegisterEnum("firmament.TaskInfoReplyType", TaskInfoReplyType_name, TaskInfoReplyType_value)
+	proto.RegisterEnum("firmament.TaskInfoType", TaskInfoType_name, TaskInfoType_value)
+	proto.RegisterEnum("firmament.QueueReplyType", QueueReplyType_name, QueueReplyType_value)
+	proto.RegisterEnum("firmament.PodGroupReplyType", PodGroupReplyType_name, PodGroupReplyType_value)
 	proto.RegisterType((*ScheduleRequest)(nil), "firmament.ScheduleRequest")
 	proto.RegisterType((*SchedulingDeltas)(nil), "firmament.SchedulingDeltas")
 	proto.RegisterType((*TaskCompletedResponse)(nil), "firmament.TaskCompletedResponse")
@@ -1026,11 +1379,12 @@ func init() {
 	proto.RegisterType((*HealthCheckResponse)(nil), "firmament.HealthCheckResponse")
 	proto.RegisterType((*TaskInfo)(nil), "firmament.TaskInfo")
 	proto.RegisterType((*TaskInfoResponse)(nil), "firmament.TaskInfoResponse")
-	proto.RegisterEnum("firmament.TaskReplyType", TaskReplyType_name, TaskReplyType_value)
-	proto.RegisterEnum("firmament.NodeReplyType", NodeReplyType_name, NodeReplyType_value)
-	proto.RegisterEnum("firmament.ServingStatus", ServingStatus_name, ServingStatus_value)
-	proto.RegisterEnum("firmament.TaskInfoReplyType", TaskInfoReplyType_name, TaskInfoReplyType_value)
-	proto.RegisterEnum("firmament.TaskInfoType", TaskInfoType_name, TaskInfoType_value)
+	proto.RegisterType((*QueueAddedResponse)(nil), "firmament.QueueAddedResponse")
+	proto.RegisterType((*QueueUpdateResponse)(nil), "firmament.QueueUpdateResponse")
+	proto.RegisterType((*QueueRemoveResponse)(nil), "firmament.QueueRemoveResponse")
+	proto.RegisterType((*PodGroupAddedResponse)(nil), "firmament.PodGroupAddedResponse")
+	proto.RegisterType((*PodGroupUpdateResponse)(nil), "firmament.PodGroupUpdateResponse")
+	proto.RegisterType((*PodGroupRemoveResponse)(nil), "firmament.PodGroupRemoveResponse")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1072,6 +1426,18 @@ type FirmamentSchedulerClient interface {
 	Check(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error)
 	// AddTaskInfo sends task status to firmament server.
 	AddTaskInfo(ctx context.Context, in *TaskInfo, opts ...grpc.CallOption) (*TaskInfoResponse, error)
+	// QueueAdded notifies firmament server the given queue is added
+	QueueAdded(ctx context.Context, in *QueueDescriptor, opts ...grpc.CallOption) (*QueueAddedResponse, error)
+	// QueueRemoved notifies firmament server the given queue is removed
+	QueueRemoved(ctx context.Context, in *QueueDescriptor, opts ...grpc.CallOption) (*QueueRemoveResponse, error)
+	// QueueUpdated notifies firmament server the given queue is updated
+	QueueUpdated(ctx context.Context, in *QueueDescriptor, opts ...grpc.CallOption) (*QueueUpdateResponse, error)
+	// Pod Group notifies firmament server the given pod group is added
+	PodGroupAdded(ctx context.Context, in *PodGroupDescriptor, opts ...grpc.CallOption) (*PodGroupAddedResponse, error)
+	// Pod Group notifies firmament server the given pod group is removed
+	PodGroupRemoved(ctx context.Context, in *PodGroupDescriptor, opts ...grpc.CallOption) (*PodGroupRemoveResponse, error)
+	// Pod Group notifies firmament server the given pod group is updated
+	PodGroupUpdated(ctx context.Context, in *PodGroupDescriptor, opts ...grpc.CallOption) (*PodGroupUpdateResponse, error)
 }
 
 type firmamentSchedulerClient struct {
@@ -1208,6 +1574,60 @@ func (c *firmamentSchedulerClient) AddTaskInfo(ctx context.Context, in *TaskInfo
 	return out, nil
 }
 
+func (c *firmamentSchedulerClient) QueueAdded(ctx context.Context, in *QueueDescriptor, opts ...grpc.CallOption) (*QueueAddedResponse, error) {
+	out := new(QueueAddedResponse)
+	err := c.cc.Invoke(ctx, "/firmament.FirmamentScheduler/QueueAdded", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *firmamentSchedulerClient) QueueRemoved(ctx context.Context, in *QueueDescriptor, opts ...grpc.CallOption) (*QueueRemoveResponse, error) {
+	out := new(QueueRemoveResponse)
+	err := c.cc.Invoke(ctx, "/firmament.FirmamentScheduler/QueueRemoved", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *firmamentSchedulerClient) QueueUpdated(ctx context.Context, in *QueueDescriptor, opts ...grpc.CallOption) (*QueueUpdateResponse, error) {
+	out := new(QueueUpdateResponse)
+	err := c.cc.Invoke(ctx, "/firmament.FirmamentScheduler/QueueUpdated", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *firmamentSchedulerClient) PodGroupAdded(ctx context.Context, in *PodGroupDescriptor, opts ...grpc.CallOption) (*PodGroupAddedResponse, error) {
+	out := new(PodGroupAddedResponse)
+	err := c.cc.Invoke(ctx, "/firmament.FirmamentScheduler/PodGroupAdded", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *firmamentSchedulerClient) PodGroupRemoved(ctx context.Context, in *PodGroupDescriptor, opts ...grpc.CallOption) (*PodGroupRemoveResponse, error) {
+	out := new(PodGroupRemoveResponse)
+	err := c.cc.Invoke(ctx, "/firmament.FirmamentScheduler/PodGroupRemoved", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *firmamentSchedulerClient) PodGroupUpdated(ctx context.Context, in *PodGroupDescriptor, opts ...grpc.CallOption) (*PodGroupUpdateResponse, error) {
+	out := new(PodGroupUpdateResponse)
+	err := c.cc.Invoke(ctx, "/firmament.FirmamentScheduler/PodGroupUpdated", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // FirmamentSchedulerServer is the server API for FirmamentScheduler service.
 type FirmamentSchedulerServer interface {
 	// Schedule sends a schedule request to firmament server.
@@ -1237,6 +1657,18 @@ type FirmamentSchedulerServer interface {
 	Check(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error)
 	// AddTaskInfo sends task status to firmament server.
 	AddTaskInfo(context.Context, *TaskInfo) (*TaskInfoResponse, error)
+	// QueueAdded notifies firmament server the given queue is added
+	QueueAdded(context.Context, *QueueDescriptor) (*QueueAddedResponse, error)
+	// QueueRemoved notifies firmament server the given queue is removed
+	QueueRemoved(context.Context, *QueueDescriptor) (*QueueRemoveResponse, error)
+	// QueueUpdated notifies firmament server the given queue is updated
+	QueueUpdated(context.Context, *QueueDescriptor) (*QueueUpdateResponse, error)
+	// Pod Group notifies firmament server the given pod group is added
+	PodGroupAdded(context.Context, *PodGroupDescriptor) (*PodGroupAddedResponse, error)
+	// Pod Group notifies firmament server the given pod group is removed
+	PodGroupRemoved(context.Context, *PodGroupDescriptor) (*PodGroupRemoveResponse, error)
+	// Pod Group notifies firmament server the given pod group is updated
+	PodGroupUpdated(context.Context, *PodGroupDescriptor) (*PodGroupUpdateResponse, error)
 }
 
 func RegisterFirmamentSchedulerServer(s *grpc.Server, srv FirmamentSchedulerServer) {
@@ -1495,6 +1927,114 @@ func _FirmamentScheduler_AddTaskInfo_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _FirmamentScheduler_QueueAdded_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueueDescriptor)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FirmamentSchedulerServer).QueueAdded(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/firmament.FirmamentScheduler/QueueAdded",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FirmamentSchedulerServer).QueueAdded(ctx, req.(*QueueDescriptor))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FirmamentScheduler_QueueRemoved_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueueDescriptor)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FirmamentSchedulerServer).QueueRemoved(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/firmament.FirmamentScheduler/QueueRemoved",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FirmamentSchedulerServer).QueueRemoved(ctx, req.(*QueueDescriptor))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FirmamentScheduler_QueueUpdated_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueueDescriptor)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FirmamentSchedulerServer).QueueUpdated(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/firmament.FirmamentScheduler/QueueUpdated",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FirmamentSchedulerServer).QueueUpdated(ctx, req.(*QueueDescriptor))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FirmamentScheduler_PodGroupAdded_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PodGroupDescriptor)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FirmamentSchedulerServer).PodGroupAdded(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/firmament.FirmamentScheduler/PodGroupAdded",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FirmamentSchedulerServer).PodGroupAdded(ctx, req.(*PodGroupDescriptor))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FirmamentScheduler_PodGroupRemoved_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PodGroupDescriptor)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FirmamentSchedulerServer).PodGroupRemoved(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/firmament.FirmamentScheduler/PodGroupRemoved",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FirmamentSchedulerServer).PodGroupRemoved(ctx, req.(*PodGroupDescriptor))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FirmamentScheduler_PodGroupUpdated_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PodGroupDescriptor)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FirmamentSchedulerServer).PodGroupUpdated(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/firmament.FirmamentScheduler/PodGroupUpdated",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FirmamentSchedulerServer).PodGroupUpdated(ctx, req.(*PodGroupDescriptor))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _FirmamentScheduler_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "firmament.FirmamentScheduler",
 	HandlerType: (*FirmamentSchedulerServer)(nil),
@@ -1555,88 +2095,126 @@ var _FirmamentScheduler_serviceDesc = grpc.ServiceDesc{
 			MethodName: "AddTaskInfo",
 			Handler:    _FirmamentScheduler_AddTaskInfo_Handler,
 		},
+		{
+			MethodName: "QueueAdded",
+			Handler:    _FirmamentScheduler_QueueAdded_Handler,
+		},
+		{
+			MethodName: "QueueRemoved",
+			Handler:    _FirmamentScheduler_QueueRemoved_Handler,
+		},
+		{
+			MethodName: "QueueUpdated",
+			Handler:    _FirmamentScheduler_QueueUpdated_Handler,
+		},
+		{
+			MethodName: "PodGroupAdded",
+			Handler:    _FirmamentScheduler_PodGroupAdded_Handler,
+		},
+		{
+			MethodName: "PodGroupRemoved",
+			Handler:    _FirmamentScheduler_PodGroupRemoved_Handler,
+		},
+		{
+			MethodName: "PodGroupUpdated",
+			Handler:    _FirmamentScheduler_PodGroupUpdated_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "firmament_scheduler.proto",
 }
 
-func init() {
-	proto.RegisterFile("firmament_scheduler.proto", fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92)
-}
+func init() { proto.RegisterFile("firmament_scheduler.proto", fileDescriptor_fc144782636f334d) }
 
-var fileDescriptor_firmament_scheduler_3cd4fc8f48cacb92 = []byte{
-	// 1161 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x57, 0xdb, 0x6e, 0xdb, 0x46,
-	0x10, 0xa5, 0x2c, 0xf9, 0x36, 0xb2, 0x25, 0x6a, 0x1c, 0x3b, 0xb2, 0xec, 0xa4, 0x0a, 0x51, 0xa0,
-	0xae, 0x53, 0x18, 0x81, 0x8b, 0xa2, 0x40, 0x5f, 0x02, 0x4a, 0xa4, 0x5c, 0xc5, 0xb6, 0x14, 0x90,
-	0x92, 0x7b, 0x79, 0x21, 0x68, 0x71, 0x63, 0x33, 0x11, 0x45, 0x96, 0xa4, 0x02, 0xb8, 0x2f, 0xfd,
-	0x80, 0xa2, 0xaf, 0xfd, 0x89, 0x7e, 0x54, 0x7f, 0xa5, 0xd8, 0xe5, 0x45, 0x4b, 0x8a, 0x0e, 0x5c,
-	0xe7, 0x4d, 0x3c, 0x7b, 0xe6, 0x70, 0xce, 0xec, 0x72, 0x67, 0x04, 0xfb, 0xef, 0x6c, 0xdf, 0x31,
-	0x1d, 0x32, 0x0b, 0x8d, 0x60, 0x72, 0x4b, 0xac, 0xf9, 0x94, 0xf8, 0x27, 0x9e, 0xef, 0x86, 0x2e,
-	0x6e, 0xa6, 0x4b, 0xad, 0xda, 0x7b, 0xf7, 0xda, 0xb0, 0x48, 0x30, 0x89, 0x96, 0x5a, 0x4f, 0x7c,
-	0x12, 0xb8, 0x73, 0x7f, 0x42, 0x8c, 0x20, 0x34, 0xc3, 0x20, 0x46, 0x5f, 0xa4, 0x68, 0xe8, 0x7a,
-	0xee, 0xd4, 0xbd, 0xb9, 0x33, 0x66, 0xae, 0x45, 0xf8, 0xc0, 0x7a, 0x68, 0x06, 0x1f, 0x78, 0x40,
-	0x64, 0x00, 0xaf, 0xb2, 0x17, 0xe7, 0x61, 0xcf, 0x6e, 0x0c, 0x8b, 0x4c, 0x43, 0x33, 0xc2, 0xa5,
-	0x06, 0xd4, 0xf5, 0x38, 0x43, 0x8d, 0xfc, 0x36, 0x27, 0x41, 0x28, 0x05, 0x20, 0xea, 0x29, 0x59,
-	0xa1, 0xdc, 0x00, 0x4f, 0x61, 0x8d, 0x45, 0x05, 0xcd, 0x52, 0xbb, 0x7c, 0x54, 0x3d, 0x6d, 0x9d,
-	0xa4, 0x36, 0x4e, 0x72, 0x64, 0x2d, 0x66, 0xe2, 0x4b, 0x68, 0xcc, 0x67, 0x89, 0x7d, 0xcb, 0xa0,
-	0x29, 0x05, 0xcd, 0x95, 0x76, 0xf9, 0xa8, 0xa2, 0x89, 0xdc, 0xc2, 0x88, 0xe2, 0x92, 0x0a, 0xbb,
-	0xf4, 0x47, 0xd7, 0x75, 0xbc, 0x29, 0x09, 0x89, 0xa5, 0x91, 0xc0, 0x73, 0x67, 0x01, 0xc1, 0x6f,
-	0xa0, 0x12, 0xde, 0x79, 0xa4, 0x59, 0x6a, 0x97, 0x8e, 0x6a, 0xa7, 0x4d, 0xee, 0xbd, 0x94, 0xaf,
-	0x11, 0x6f, 0x7a, 0x37, 0xba, 0xf3, 0x88, 0xc6, 0x58, 0xd2, 0xdf, 0x25, 0xa8, 0x53, 0x5c, 0x21,
-	0xc1, 0xc4, 0xb7, 0xbd, 0xd0, 0x76, 0x67, 0xd8, 0x81, 0x45, 0x7d, 0x28, 0xe6, 0xfa, 0x4c, 0xac,
-	0x7a, 0xba, 0x9f, 0x13, 0x53, 0x52, 0x82, 0x56, 0x0b, 0x33, 0xcf, 0xf8, 0x1a, 0xd2, 0xcd, 0x8a,
-	0x25, 0x56, 0x98, 0x04, 0x9f, 0xcf, 0x1b, 0xf7, 0x9a, 0x53, 0xd8, 0x7e, 0xcf, 0x3f, 0x26, 0xfe,
-	0xf4, 0xf9, 0xb5, 0x63, 0x87, 0x8f, 0xf7, 0xd7, 0x85, 0x9d, 0x08, 0x76, 0xdc, 0x8f, 0x8f, 0x16,
-	0xe9, 0x00, 0x52, 0xb8, 0x67, 0xda, 0xd3, 0xcf, 0x4d, 0x64, 0xec, 0x59, 0xe6, 0xe3, 0xdd, 0xc8,
-	0xd0, 0x18, 0xb8, 0x16, 0x91, 0x2d, 0xeb, 0x41, 0x12, 0x94, 0x5b, 0x90, 0x47, 0x04, 0x3f, 0xb4,
-	0x20, 0x45, 0x22, 0x1d, 0x40, 0x0a, 0x3f, 0xb8, 0x20, 0x9f, 0x48, 0xe4, 0xe1, 0x05, 0x29, 0x12,
-	0x91, 0xa1, 0xc1, 0x4e, 0x09, 0xfd, 0x70, 0x1f, 0x59, 0x53, 0x15, 0x76, 0xb5, 0xf8, 0xc2, 0x78,
-	0xa8, 0x4c, 0x51, 0x26, 0x5f, 0xc2, 0x3a, 0xdb, 0xdf, 0xbe, 0x82, 0xfb, 0xb0, 0xc1, 0xbe, 0x9f,
-	0xb9, 0x6d, 0xb1, 0xe0, 0x8a, 0xb6, 0x4e, 0x9f, 0xc7, 0xb6, 0x25, 0xbd, 0x82, 0x6a, 0xf2, 0x32,
-	0xca, 0x7c, 0x01, 0x5b, 0xe9, 0x65, 0x95, 0xb0, 0x37, 0xb5, 0x6a, 0x82, 0xd1, 0x88, 0xef, 0x01,
-	0x7f, 0x24, 0xe6, 0x34, 0xbc, 0xed, 0xde, 0x92, 0xc9, 0x87, 0xf8, 0xca, 0xa1, 0x81, 0x37, 0xbe,
-	0x37, 0x31, 0x02, 0xe2, 0x7f, 0xb4, 0x27, 0x24, 0x09, 0xa4, 0x98, 0x1e, 0x41, 0xd2, 0x19, 0xec,
-	0x64, 0x02, 0x63, 0x57, 0xaf, 0x60, 0x8d, 0x5e, 0x73, 0xf3, 0xa0, 0xc0, 0x17, 0x0b, 0x9d, 0xdd,
-	0xe8, 0x6c, 0x5d, 0x8b, 0x79, 0xd2, 0x9f, 0x2b, 0xb0, 0x41, 0xad, 0xf5, 0x67, 0xef, 0x5c, 0x3c,
-	0x80, 0x4d, 0xe6, 0x6d, 0x66, 0x3a, 0xc9, 0x5b, 0x99, 0xd9, 0x81, 0xe9, 0x10, 0xfc, 0x02, 0xd2,
-	0xd4, 0x0d, 0xdb, 0x62, 0x5f, 0xfc, 0xa6, 0x06, 0x09, 0xd4, 0xb7, 0xf0, 0x2b, 0xa8, 0x4f, 0xbc,
-	0xb9, 0x31, 0x0f, 0xed, 0xa9, 0xfd, 0xbb, 0x49, 0x2f, 0x9b, 0x66, 0xb9, 0x5d, 0x3a, 0x2a, 0x6b,
-	0xb5, 0x89, 0x37, 0x1f, 0x2f, 0x50, 0x4a, 0x74, 0x88, 0x93, 0x21, 0x56, 0x22, 0xa2, 0x43, 0x1c,
-	0x9e, 0xd8, 0x81, 0x67, 0xc4, 0xbb, 0x25, 0x0e, 0xf1, 0xcd, 0xa9, 0x11, 0x84, 0xae, 0x6f, 0xde,
-	0x90, 0x4c, 0xd8, 0x2a, 0x0b, 0x3b, 0x48, 0x49, 0x7a, 0xc4, 0xe1, 0x35, 0x5e, 0xc6, 0x1b, 0xbd,
-	0xc6, 0x0a, 0xf2, 0x34, 0x77, 0x5e, 0xa8, 0x6d, 0x6e, 0x9f, 0x15, 0x10, 0x13, 0x94, 0xab, 0x29,
-	0x7f, 0x52, 0x0e, 0x0b, 0x04, 0x72, 0xa7, 0xe5, 0xf8, 0xdf, 0x12, 0x6c, 0x67, 0x0e, 0x23, 0xee,
-	0x42, 0x63, 0x24, 0xeb, 0xe7, 0x46, 0x77, 0x78, 0xf9, 0xf6, 0x42, 0x1d, 0xa9, 0x8a, 0x31, 0x3c,
-	0x17, 0x85, 0x14, 0xd6, 0xc7, 0x9d, 0xcb, 0xfe, 0x28, 0x86, 0x4b, 0xb8, 0x03, 0x75, 0x06, 0x6b,
-	0xea, 0xe5, 0xf0, 0x2a, 0x02, 0x57, 0x10, 0xa1, 0xc6, 0xc0, 0x9e, 0xdc, 0xbf, 0x88, 0xb0, 0x72,
-	0x4a, 0x1c, 0xbf, 0x55, 0xe4, 0x38, 0xba, 0x92, 0x12, 0x07, 0xc3, 0x91, 0xd1, 0x1b, 0x8e, 0x07,
-	0x8a, 0xb8, 0x8a, 0x7b, 0x80, 0x0c, 0x7b, 0x33, 0xec, 0x70, 0xf8, 0x1a, 0xb6, 0x60, 0x8f, 0xe1,
-	0xf2, 0x85, 0xa6, 0xca, 0xca, 0x2f, 0x8b, 0x44, 0xc4, 0xf5, 0x74, 0x4d, 0x1f, 0xc9, 0x23, 0x95,
-	0x45, 0x75, 0x35, 0x95, 0xbe, 0x46, 0xdc, 0x38, 0xfe, 0xab, 0x04, 0xdb, 0x99, 0xef, 0x04, 0x1b,
-	0xb0, 0x3d, 0x18, 0x2a, 0xaa, 0x21, 0x2b, 0x4a, 0xe2, 0x0e, 0xa1, 0xc6, 0xa0, 0x45, 0xc6, 0xcc,
-	0x1a, 0xc3, 0x32, 0xd6, 0x12, 0x90, 0xb3, 0x51, 0x4e, 0xa3, 0x17, 0xe9, 0x56, 0xf0, 0x29, 0xec,
-	0x44, 0x2f, 0x89, 0xd3, 0x55, 0x7f, 0xee, 0xeb, 0x23, 0x5d, 0x5c, 0x3d, 0xfe, 0x01, 0xb6, 0x33,
-	0xc7, 0x1b, 0xab, 0xb0, 0x3e, 0x1e, 0x9c, 0x0f, 0x86, 0x3f, 0x0d, 0x44, 0x81, 0x3e, 0xe8, 0xaa,
-	0x76, 0xd5, 0x1f, 0x9c, 0x89, 0x25, 0xac, 0x43, 0x95, 0x4a, 0x26, 0xc0, 0xca, 0xf1, 0x1f, 0xd1,
-	0x2d, 0x93, 0xd9, 0x48, 0xdc, 0x87, 0x5d, 0x6a, 0xbe, 0x3f, 0xe8, 0x0d, 0xb3, 0xbb, 0x23, 0xd0,
-	0x24, 0xd2, 0xa5, 0x8c, 0x8d, 0xb8, 0x60, 0x5c, 0x4c, 0x6c, 0x5d, 0x2c, 0x67, 0xd6, 0xa2, 0xa0,
-	0x64, 0xad, 0x72, 0xfc, 0x1d, 0x6c, 0xf1, 0x47, 0x11, 0x45, 0xd8, 0x4a, 0xb9, 0xb2, 0xa2, 0x88,
-	0x42, 0xb2, 0xcf, 0x5c, 0xb4, 0x58, 0x3a, 0xfd, 0x67, 0x03, 0xb0, 0x97, 0x9c, 0xc5, 0x64, 0x6a,
-	0xf1, 0x51, 0x85, 0x8d, 0xe4, 0x01, 0x0b, 0xe6, 0x92, 0x64, 0xae, 0x69, 0x1d, 0xdc, 0x3f, 0xb3,
-	0x04, 0x92, 0x80, 0x67, 0xd1, 0x11, 0x4e, 0x27, 0x10, 0xc4, 0xdc, 0xc1, 0x1f, 0xf7, 0x95, 0x56,
-	0x3b, 0x87, 0x2d, 0xcd, 0x2b, 0x92, 0x80, 0x32, 0xc0, 0xa2, 0xbd, 0x16, 0xaa, 0x3c, 0xcb, 0x61,
-	0xd9, 0xc6, 0x23, 0x09, 0xd8, 0x85, 0x2a, 0xd7, 0xe6, 0x0b, 0x35, 0x9e, 0x2f, 0xf5, 0x81, 0x4c,
-	0x07, 0x94, 0x04, 0x1c, 0x46, 0x86, 0xd2, 0x91, 0x23, 0x53, 0x9c, 0xdc, 0x90, 0xb4, 0x64, 0x6c,
-	0x69, 0x50, 0x91, 0x04, 0x3c, 0x8f, 0xb2, 0x8a, 0x5b, 0xdc, 0x27, 0xe5, 0xf2, 0xd9, 0xe5, 0xda,
-	0xa2, 0x24, 0xe0, 0x15, 0x6c, 0xa6, 0xbd, 0x1f, 0xbf, 0xe6, 0xe8, 0x49, 0x43, 0x19, 0xc5, 0xd3,
-	0x2e, 0x65, 0x2d, 0x06, 0xa9, 0xd6, 0x61, 0xae, 0x71, 0x65, 0x86, 0x07, 0x49, 0x40, 0x15, 0x60,
-	0xd1, 0xcb, 0x71, 0xaf, 0x40, 0x38, 0xbf, 0x03, 0xcb, 0xad, 0x9f, 0x9d, 0x86, 0x2a, 0x37, 0x57,
-	0xdc, 0xab, 0xf3, 0x7c, 0xa9, 0x8d, 0xe6, 0x77, 0xe1, 0xd7, 0x48, 0x28, 0x29, 0xda, 0xff, 0x70,
-	0x9a, 0xd7, 0x5e, 0xae, 0xa1, 0x02, 0x5b, 0xb2, 0x65, 0xa5, 0x13, 0x03, 0x3e, 0xc9, 0x6f, 0x22,
-	0x45, 0x5b, 0x87, 0x45, 0x28, 0xa7, 0x72, 0xc1, 0x54, 0xe8, 0x1b, 0x22, 0x95, 0x66, 0x41, 0x8a,
-	0x91, 0x52, 0xfb, 0xbe, 0x15, 0x4e, 0xad, 0x07, 0xab, 0xac, 0x43, 0x23, 0x5f, 0xe2, 0xe5, 0x96,
-	0x9f, 0x71, 0x57, 0xd4, 0xd8, 0x5f, 0x43, 0x35, 0xf6, 0xc6, 0x1a, 0xf5, 0x4e, 0x41, 0x17, 0xca,
-	0x7c, 0xd1, 0xf9, 0x2e, 0x76, 0xbd, 0xc6, 0xfe, 0xe0, 0x7c, 0xfb, 0x5f, 0x00, 0x00, 0x00, 0xff,
-	0xff, 0xef, 0xe7, 0x84, 0x47, 0x8c, 0x0d, 0x00, 0x00,
+var fileDescriptor_fc144782636f334d = []byte{
+	// 1420 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x58, 0xdb, 0x6e, 0xdb, 0xc6,
+	0x16, 0x15, 0x2d, 0xf9, 0xb6, 0x65, 0x4b, 0xd4, 0xc8, 0x96, 0x6d, 0xe5, 0x72, 0x14, 0xe2, 0x00,
+	0xc7, 0x47, 0x39, 0x27, 0x08, 0x5c, 0x14, 0x05, 0xfa, 0x12, 0xd0, 0x26, 0xed, 0x32, 0x76, 0x24,
+	0x87, 0x92, 0xdc, 0xcb, 0x0b, 0x21, 0x8b, 0x13, 0x5b, 0x89, 0x24, 0x32, 0xbc, 0x04, 0x70, 0x5f,
+	0xfa, 0x01, 0x45, 0xdf, 0x8a, 0xfe, 0x43, 0x3f, 0xa3, 0x5f, 0xd2, 0x5f, 0x29, 0x66, 0xc8, 0xa1,
+	0x66, 0x46, 0x74, 0xe2, 0x38, 0x6f, 0xe6, 0xda, 0x7b, 0x2f, 0xee, 0xb5, 0xe7, 0xc2, 0x25, 0xc3,
+	0xde, 0x9b, 0x71, 0x30, 0x1d, 0x4e, 0xf1, 0x2c, 0x72, 0xc2, 0xd1, 0x35, 0x76, 0xe3, 0x09, 0x0e,
+	0x9e, 0xf9, 0x81, 0x17, 0x79, 0x68, 0x3d, 0x0b, 0x35, 0x2b, 0x6f, 0xbd, 0x4b, 0xc7, 0xc5, 0xe1,
+	0x28, 0x09, 0x35, 0xb7, 0x02, 0x1c, 0x7a, 0x71, 0x30, 0xc2, 0x4e, 0x18, 0x0d, 0xa3, 0x30, 0x45,
+	0x9f, 0x64, 0x68, 0xe4, 0xf9, 0xde, 0xc4, 0xbb, 0xba, 0x71, 0x66, 0x9e, 0x8b, 0xf9, 0xc2, 0x6a,
+	0x34, 0x0c, 0xdf, 0xf1, 0x80, 0x4a, 0x01, 0x9e, 0xa5, 0x91, 0xf6, 0x31, 0x9e, 0x5d, 0x39, 0x2e,
+	0x9e, 0x44, 0x43, 0x96, 0xf9, 0x3e, 0xc6, 0xb1, 0x40, 0xb6, 0xe5, 0x7b, 0xae, 0x73, 0x15, 0x78,
+	0xb1, 0xcf, 0xa1, 0x5a, 0x0d, 0xaa, 0xbd, 0x54, 0x89, 0x8d, 0xdf, 0xc7, 0x38, 0x8c, 0xb4, 0x10,
+	0xd4, 0x5e, 0x46, 0x6a, 0x10, 0xce, 0x10, 0x1d, 0xc0, 0x0a, 0x65, 0x0f, 0x77, 0x95, 0x56, 0x71,
+	0xbf, 0x7c, 0xd0, 0x7c, 0x96, 0xc9, 0x7d, 0x26, 0x25, 0xdb, 0x69, 0x26, 0x7a, 0x0a, 0xb5, 0x78,
+	0xc6, 0xc6, 0xe4, 0x3a, 0xa4, 0xf5, 0x70, 0x77, 0xa9, 0x55, 0xdc, 0x2f, 0xd9, 0x2a, 0x17, 0xe8,
+	0x13, 0x5c, 0x33, 0x61, 0x9b, 0xfc, 0x71, 0xe4, 0x4d, 0xfd, 0x09, 0x8e, 0xb0, 0x6b, 0xe3, 0xd0,
+	0xf7, 0x66, 0x21, 0x46, 0xff, 0x83, 0x52, 0x74, 0xe3, 0xe3, 0x5d, 0xa5, 0xa5, 0xec, 0x57, 0x0e,
+	0x76, 0xb9, 0xf7, 0x92, 0x7c, 0x1b, 0xfb, 0x93, 0x9b, 0xfe, 0x8d, 0x8f, 0x6d, 0x9a, 0xa5, 0xfd,
+	0xa1, 0x40, 0x95, 0xe0, 0x06, 0x0e, 0x47, 0xc1, 0xd8, 0x8f, 0xc6, 0xde, 0x0c, 0x1d, 0xc2, 0x7c,
+	0x8e, 0x04, 0xf3, 0x02, 0x4a, 0x56, 0x3e, 0xd8, 0x93, 0xc8, 0x8c, 0x2c, 0xc1, 0xae, 0x44, 0xc2,
+	0x33, 0x7a, 0x01, 0xd9, 0xa2, 0xa6, 0x14, 0x4b, 0x94, 0x82, 0xef, 0xe7, 0xa5, 0x77, 0xc9, 0x31,
+	0x6c, 0xbe, 0xe5, 0x1f, 0x99, 0xbe, 0x5e, 0x7c, 0x39, 0x1d, 0x47, 0xf7, 0xd7, 0x77, 0x04, 0xf5,
+	0x04, 0x9e, 0x7a, 0x1f, 0xee, 0x4d, 0x72, 0x08, 0x88, 0xc0, 0xc7, 0xc3, 0xf1, 0xe4, 0x4b, 0x1b,
+	0x19, 0xf8, 0xee, 0xf0, 0xfe, 0x6a, 0x74, 0xa8, 0x75, 0x3c, 0x17, 0xeb, 0xae, 0x7b, 0x27, 0x0a,
+	0x92, 0x9b, 0xd3, 0x47, 0x02, 0xdf, 0x75, 0x20, 0x79, 0x24, 0x87, 0x80, 0x08, 0x7c, 0xe7, 0x81,
+	0x7c, 0xa4, 0x91, 0xbb, 0x0f, 0x24, 0x8f, 0x44, 0x87, 0x1a, 0xdd, 0x25, 0xe4, 0x80, 0xdf, 0x73,
+	0xa6, 0x26, 0x6c, 0xdb, 0xe9, 0xc5, 0x72, 0x57, 0x9a, 0xbc, 0x4e, 0xfe, 0x0d, 0xab, 0x74, 0x7d,
+	0x2d, 0x03, 0xed, 0xc1, 0x1a, 0x3d, 0x3f, 0xf1, 0xd8, 0xa5, 0xc5, 0x25, 0x7b, 0x95, 0x3c, 0x0f,
+	0xc6, 0xae, 0xf6, 0x1c, 0xca, 0xec, 0x65, 0x24, 0xf3, 0x09, 0x6c, 0x64, 0x97, 0x1a, 0xcb, 0x5e,
+	0xb7, 0xcb, 0x0c, 0x23, 0x15, 0xdf, 0x00, 0xfa, 0x0e, 0x0f, 0x27, 0xd1, 0xf5, 0xd1, 0x35, 0x1e,
+	0xbd, 0x4b, 0xaf, 0x1c, 0x52, 0x78, 0x15, 0xf8, 0x23, 0x27, 0xc4, 0xc1, 0x87, 0xf1, 0x08, 0xb3,
+	0x42, 0x82, 0xf5, 0x12, 0x48, 0x3b, 0x81, 0xba, 0x50, 0x98, 0xaa, 0x7a, 0x0e, 0x2b, 0xe4, 0x3a,
+	0x8c, 0xc3, 0x1c, 0x5d, 0xb4, 0x74, 0x76, 0xd5, 0xa3, 0x71, 0x3b, 0xcd, 0xd3, 0x7e, 0x5d, 0x82,
+	0x35, 0x22, 0xcd, 0x9a, 0xbd, 0xf1, 0xd0, 0x03, 0x58, 0xa7, 0xda, 0x66, 0xc3, 0x29, 0x7b, 0x2b,
+	0x15, 0xdb, 0x19, 0x4e, 0x31, 0xfa, 0x17, 0x64, 0xad, 0x3b, 0x63, 0x97, 0x9e, 0xf8, 0x75, 0x1b,
+	0x18, 0x64, 0xb9, 0xe8, 0x3f, 0x50, 0x1d, 0xf9, 0xb1, 0x13, 0x47, 0xe3, 0xc9, 0xf8, 0xe7, 0x21,
+	0xb9, 0x6c, 0x76, 0x8b, 0x2d, 0x65, 0xbf, 0x68, 0x57, 0x46, 0x7e, 0x3c, 0x98, 0xa3, 0x24, 0x71,
+	0x8a, 0xa7, 0x42, 0x62, 0x29, 0x49, 0x9c, 0xe2, 0x29, 0x9f, 0x78, 0x08, 0x8f, 0xb0, 0x7f, 0x8d,
+	0xa7, 0x38, 0x18, 0x4e, 0x9c, 0x30, 0xf2, 0x82, 0xe1, 0x15, 0x16, 0xca, 0x96, 0x69, 0xd9, 0x83,
+	0x2c, 0xa9, 0x97, 0xe4, 0xf0, 0x1c, 0x4f, 0xd3, 0x85, 0x5e, 0xa1, 0x03, 0xd9, 0x91, 0xf6, 0x0b,
+	0x91, 0xcd, 0xad, 0xb3, 0x01, 0x2a, 0x43, 0xb9, 0x99, 0xf2, 0x3b, 0xe5, 0x61, 0x0e, 0xc1, 0xe2,
+	0xe6, 0x47, 0xaf, 0xc9, 0xf7, 0x46, 0x3c, 0xc9, 0xff, 0x17, 0x78, 0xf8, 0xdb, 0x96, 0x26, 0xcb,
+	0x24, 0x06, 0xd4, 0x29, 0x9e, 0x1c, 0xa1, 0x2f, 0x65, 0x49, 0x6e, 0x84, 0xfb, 0xb2, 0x58, 0xb0,
+	0x7d, 0xee, 0xb9, 0x27, 0xe4, 0x6b, 0x29, 0x6a, 0xba, 0x7d, 0x36, 0x2c, 0x5f, 0xa6, 0x7a, 0x09,
+	0x0d, 0x16, 0x92, 0x94, 0x7d, 0x11, 0x97, 0xa4, 0xef, 0xb3, 0xb9, 0xda, 0x7f, 0x2b, 0xb0, 0x29,
+	0x5c, 0x20, 0x68, 0x1b, 0x6a, 0x7d, 0xbd, 0x77, 0xea, 0x1c, 0x75, 0x5f, 0x9d, 0x9f, 0x99, 0x7d,
+	0xd3, 0x70, 0xba, 0xa7, 0x6a, 0x21, 0x83, 0x7b, 0x83, 0xc3, 0x57, 0x56, 0x3f, 0x85, 0x15, 0x54,
+	0x87, 0x2a, 0x85, 0x6d, 0xf3, 0x55, 0xf7, 0x22, 0x01, 0x97, 0x10, 0x82, 0x0a, 0x05, 0x8f, 0x75,
+	0xeb, 0x2c, 0xc1, 0x8a, 0x59, 0xe2, 0xe0, 0xdc, 0xd0, 0xd3, 0xea, 0x52, 0x96, 0xd8, 0xe9, 0xf6,
+	0x9d, 0xe3, 0xee, 0xa0, 0x63, 0xa8, 0xcb, 0xa8, 0x01, 0x88, 0x62, 0x2f, 0xbb, 0x87, 0x1c, 0xbe,
+	0x82, 0x9a, 0xd0, 0xa0, 0xb8, 0x7e, 0x66, 0x9b, 0xba, 0xf1, 0xe3, 0xbc, 0x11, 0x75, 0x35, 0x8b,
+	0xf5, 0xfa, 0x7a, 0xdf, 0xa4, 0x55, 0x47, 0xb6, 0x49, 0x5e, 0xa3, 0xae, 0xb5, 0x7f, 0x53, 0x60,
+	0x53, 0xb8, 0xdb, 0x50, 0x0d, 0x36, 0x3b, 0x5d, 0xc3, 0x74, 0x74, 0xc3, 0x60, 0xea, 0x10, 0x54,
+	0x28, 0x34, 0xef, 0x98, 0x4a, 0xa3, 0x98, 0x20, 0x8d, 0x81, 0x9c, 0x8c, 0x62, 0x56, 0x3d, 0x6f,
+	0xb7, 0x84, 0x76, 0xa0, 0x9e, 0xbc, 0x24, 0x6d, 0xd7, 0xfc, 0xc1, 0xea, 0xf5, 0x7b, 0xea, 0x72,
+	0xfb, 0x5b, 0xd8, 0x14, 0xae, 0x24, 0x54, 0x86, 0xd5, 0x41, 0xe7, 0xb4, 0xd3, 0xfd, 0xbe, 0xa3,
+	0x16, 0xc8, 0x43, 0xcf, 0xb4, 0x2f, 0xac, 0xce, 0x89, 0xaa, 0xa0, 0x2a, 0x94, 0x09, 0x25, 0x03,
+	0x96, 0xda, 0xbf, 0x24, 0x5f, 0x06, 0xe1, 0xf0, 0xa1, 0x3d, 0xd8, 0x26, 0xe2, 0xad, 0xce, 0x71,
+	0x57, 0x5c, 0x9d, 0x02, 0x69, 0x22, 0x0b, 0x09, 0x32, 0xd2, 0x81, 0x71, 0x35, 0xa9, 0x74, 0xb5,
+	0x28, 0xc4, 0x92, 0x22, 0x16, 0x2b, 0xb5, 0xbf, 0x86, 0x0d, 0xfe, 0xfa, 0x40, 0x2a, 0x6c, 0x64,
+	0xb9, 0xba, 0x61, 0xa8, 0x05, 0xb6, 0xce, 0x5c, 0xb5, 0xaa, 0xb4, 0xff, 0x54, 0xa0, 0x22, 0x9e,
+	0x30, 0x32, 0xb3, 0xd7, 0x03, 0x73, 0x20, 0xac, 0xc2, 0x16, 0xa8, 0x09, 0xc6, 0x4d, 0x57, 0x99,
+	0xa3, 0xf2, 0x42, 0x24, 0x28, 0xbf, 0xc9, 0x76, 0xa0, 0x9e, 0x92, 0xa6, 0x53, 0xa7, 0xe4, 0x6a,
+	0x69, 0x9e, 0xcd, 0xef, 0xb4, 0x8c, 0xd8, 0xea, 0x5c, 0xe8, 0x67, 0x16, 0xe5, 0x58, 0x69, 0xff,
+	0xa5, 0x40, 0x6d, 0xe1, 0xb4, 0x90, 0xed, 0x7f, 0xde, 0x35, 0x4e, 0xec, 0xee, 0xe0, 0x9c, 0xef,
+	0x78, 0x07, 0xea, 0x19, 0x2c, 0x34, 0xcd, 0x07, 0x84, 0xbe, 0x1b, 0x80, 0xb2, 0x00, 0xdf, 0x7a,
+	0x13, 0x1a, 0xf3, 0x17, 0x48, 0xdd, 0xf3, 0x35, 0xbc, 0x00, 0xfe, 0x25, 0xbc, 0x86, 0x83, 0xdf,
+	0x37, 0x00, 0x1d, 0xb3, 0xb3, 0xcf, 0x9c, 0x7d, 0x80, 0x4c, 0x58, 0x63, 0x0f, 0x28, 0xc7, 0xbb,
+	0x33, 0xef, 0xdf, 0x7c, 0x70, 0xbb, 0xaf, 0x0f, 0xb5, 0x02, 0x3a, 0x49, 0xae, 0x8c, 0xcc, 0xa5,
+	0x23, 0x24, 0x7d, 0x1c, 0x06, 0x96, 0xd1, 0x6c, 0x49, 0xd8, 0x82, 0xa7, 0xd7, 0x0a, 0x48, 0x07,
+	0x98, 0x5b, 0xd0, 0x5c, 0x96, 0x47, 0x12, 0x26, 0x9a, 0x33, 0xad, 0x80, 0x8e, 0xa0, 0xcc, 0x59,
+	0xe1, 0x5c, 0x8e, 0xc7, 0x0b, 0x5e, 0x49, 0x70, 0x89, 0x5a, 0x01, 0x75, 0x13, 0x41, 0x99, 0x2d,
+	0x17, 0x86, 0x23, 0xfd, 0x90, 0x58, 0x10, 0xb6, 0x60, 0xe6, 0xb5, 0x02, 0x3a, 0x4d, 0xba, 0x4a,
+	0x6d, 0xe0, 0x47, 0xe9, 0xe4, 0xee, 0x24, 0xeb, 0xa8, 0x15, 0xd0, 0x05, 0xac, 0x67, 0xfe, 0x18,
+	0xfd, 0x97, 0x4b, 0x67, 0xa6, 0xab, 0x9f, 0xfe, 0x72, 0x24, 0x59, 0xf3, 0x1f, 0x1b, 0xcd, 0x87,
+	0x92, 0xb9, 0x13, 0x3e, 0x61, 0x5a, 0x01, 0x99, 0x00, 0x73, 0xbf, 0x8b, 0x1a, 0x39, 0xc4, 0xf2,
+	0x0a, 0x2c, 0xda, 0x63, 0xba, 0x1b, 0xca, 0x9c, 0xf7, 0xbe, 0x95, 0xe7, 0xf1, 0x82, 0xd5, 0x94,
+	0x57, 0xe1, 0xa7, 0x84, 0x88, 0x0d, 0xed, 0x33, 0x94, 0xca, 0xdc, 0x8b, 0x33, 0x34, 0x60, 0x43,
+	0x77, 0xdd, 0xcc, 0x55, 0xa3, 0x2d, 0x79, 0x11, 0x09, 0xda, 0x7c, 0x98, 0x87, 0x72, 0x2c, 0x67,
+	0x94, 0x85, 0xbc, 0x21, 0x61, 0xd9, 0xcd, 0x69, 0x31, 0x61, 0x6a, 0xdd, 0x16, 0xe1, 0xd8, 0x8e,
+	0x61, 0x99, 0xba, 0x58, 0xc4, 0x8f, 0x78, 0xd1, 0x16, 0x0b, 0xea, 0xf2, 0xcc, 0xef, 0x0b, 0x28,
+	0xa7, 0xda, 0xa8, 0x99, 0xad, 0xe7, 0x38, 0x35, 0xe1, 0x44, 0x2f, 0x38, 0x3d, 0x0b, 0x60, 0xee,
+	0xdb, 0x84, 0xcd, 0x4a, 0x61, 0x6e, 0xd0, 0x8f, 0xe4, 0x98, 0xbc, 0xa7, 0xce, 0x60, 0x83, 0xf3,
+	0x5d, 0x1f, 0x27, 0x7b, 0xbc, 0x68, 0xbf, 0x78, 0x33, 0xc3, 0xb1, 0xe5, 0x9d, 0xa3, 0x4f, 0xb2,
+	0x89, 0x36, 0x4b, 0x2b, 0x20, 0x1b, 0x36, 0x05, 0x37, 0x27, 0xcc, 0x9d, 0x45, 0x38, 0xc6, 0x56,
+	0x4e, 0x58, 0xd6, 0x3b, 0x80, 0xaa, 0x68, 0xc5, 0x3e, 0xc9, 0xfa, 0x24, 0xd7, 0x94, 0x49, 0xc2,
+	0x39, 0x5a, 0xa6, 0xfd, 0x1e, 0xb4, 0xf2, 0x04, 0x2e, 0x57, 0xe8, 0x7f, 0x7b, 0xbe, 0xfa, 0x27,
+	0x00, 0x00, 0xff, 0xff, 0x3c, 0xed, 0x0f, 0x8d, 0xc1, 0x12, 0x00, 0x00,
 }
